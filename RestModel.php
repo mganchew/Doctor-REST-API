@@ -12,7 +12,7 @@ class RestModel
     protected $location;
 
     public function __construct($data){
-
+        
        // $this->link = mysqli_connect("localhost","root","","doctor");
         if(count($data)>1){
         $this->hour = $data['hour'];
@@ -48,14 +48,14 @@ class RestModel
     {
 
 
-        //if($this->checkDB() !== true){
-          //  $this->msg = "appointment already exists pick a new date or doctor";
-           // return $this->msg;
-        //}else{
+        if($this->checkDB() !== true){
+            $this->msg = "appointment already exists pick a new date or doctor";
+           return $this->msg;
+        }else{
           //  $this->insertInDB();
             $this->insertInCalendar();
             $this->msg = array("Message" => "Appointment created.");
-        //}
+        }
 
         return json_encode($this->msg);
 
@@ -119,9 +119,15 @@ class RestModel
 
     public function checkAppointment()
     {
-
+        $mySqlData = 0;
         //TODO: Return all appointments after current date
-        return "no appointments";
+        if($mySqlData == 0){
+         $this->msg = array("Message" => "no appointments");
+
+        }
+
+        return json_encode($this->msg);
+
     }
 
     public function register()
