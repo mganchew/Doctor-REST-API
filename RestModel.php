@@ -4,6 +4,24 @@ class RestModel
 {
 
     protected $msg;
+    protected $link;
+    protected $hour;
+    protected $doctor;
+    protected $user;
+    protected $spec;
+    protected $location;
+
+    public function __construct($data){
+
+       // $this->link = mysqli_connect("localhost","root","","doctor");
+        if(count($data)>1){
+        $this->hour = $data['hour'];
+        $this->doctor = $data['doctor'];
+        $this->spec = $data['spec'];
+        $this->location = $data['location'];
+        }
+        $this->user = $data['user'];
+    }
 
     public function getClient(){
 
@@ -28,16 +46,16 @@ class RestModel
 
     public function appointment()
     {
-        $data = $this->getFromPost();
 
-        if($this->checkDB() !== true){
-            $this->msg = "appointment already exists pick a new date or doctor";
-            return $this->msg;
-        }else{
-            $this->insertInDB($data);
-            $this->insertInCalendar($data);
-            $this->msg = "Appointment created.";
-        }
+
+        //if($this->checkDB() !== true){
+          //  $this->msg = "appointment already exists pick a new date or doctor";
+           // return $this->msg;
+        //}else{
+          //  $this->insertInDB();
+            $this->insertInCalendar();
+            $this->msg = array("Message" => "Appointment created.");
+        //}
 
         return json_encode($this->msg);
 
@@ -59,7 +77,7 @@ class RestModel
 
     }
 
-    public function insertInCalendar($data)
+    public function insertInCalendar()
     {
 
         $client = $this->getClient();
@@ -68,22 +86,22 @@ class RestModel
 
         $event = new Google_Service_Calendar_Event(array(
             'summary' => 'Test Calendar',
-            'location' => 'Plovdiv',
+            'location' => $this->location,
             'description' => 'A chance to hear more about Google\'s developer products.',
             'start' => array(
-                'dateTime' => '2015-07-12T08:25:00+03:00',
+                'dateTime' => '2015-07-12T'. $this->hour .':00+03:00',
                 'timeZone' => 'Europe/Sofia',
             ),
             'end' => array(
-                'dateTime' => '2015-07-12T09:00:00+03:00',
+                'dateTime' => '2015-07-12T' . $this->hour . ':45+03:00',
                 'timeZone' => 'Europe/Sofia',
             ),
             'recurrence' => array(
                 'RRULE:FREQ=DAILY;COUNT=1'
             ),
             'attendees' => array(
-                array('email' => 'ev0nappy@gmail.com'),
-                array('email' => 'wska.bby93@gmail.com'),
+                array('email' => $this->user),
+                array('email' => $this->doctor),
             ),
             'reminders' => array(
                 'useDefault' => FALSE,
@@ -96,7 +114,6 @@ class RestModel
 
         $calendarId = 'primary';
         $event = $service->events->insert($calendarId, $event);
-        printf('Event created: %s\n', $event->htmlLink);
 
     }
 
@@ -113,12 +130,5 @@ class RestModel
         //TODO: Register logic comes here
 
     }
-
-    public function getFromPost(){
-
-        echo "post";
-
-    }
-
 
 }

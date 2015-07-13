@@ -35,7 +35,8 @@ function getResponse($url, $data)
 
 }
 
-$data = ["username" => "mladen", "password" => "12312312", "email" => "asdqwe@asda", "firstName" => "123asd", "LastName" => "srrgasd"];
-$test = getResponse("127.0.0.1:8081/checkAppointment", $data);
+$data = ["user" => "m.ganchew@gmail.com", "hour" => "10:00", "doctor" => "asdqwe@asda", "spec" => "123asd", "location" => "Plovdiv"];
+$test = getResponse("127.0.0.2:8081/appointment", $data);
 var_dump($test);
-$test1 = json_decode($test, true);
+$test1 = json_decode($test,true);
+var_dump($test1);

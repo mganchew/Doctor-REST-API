@@ -2,8 +2,9 @@
 require 'vendor/autoload.php';
 require 'RestModel.php';
 $scriptNameParts = explode('/', $_SERVER['SCRIPT_NAME']);
+$data = $_POST;
 
-$obj = new RestModel();
+$obj = new RestModel($data);
 
 switch ($scriptNameParts[1]){
 
@@ -21,5 +22,5 @@ switch ($scriptNameParts[1]){
         //TODO: enter code for registration
 
 }
-$a = json_encode($test);
-echo $a;
+
+echo $test;
