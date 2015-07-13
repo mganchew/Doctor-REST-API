@@ -1,6 +1,8 @@
 <?php
 function getResponse($url, $data)
 {
+
+    date_default_timezone_get('UTC');
     $rawData = "";
     if ($_POST != "") {
 
@@ -11,7 +13,7 @@ function getResponse($url, $data)
         }
         $postData = rtrim($rawData, "&");
     }
-    date_default_timezone_get('UTC');
+
     $credentials = base64_encode("");
     $headers = array(
 
@@ -29,7 +31,6 @@ function getResponse($url, $data)
     curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, FALSE);
 
     $response = curl_exec($handle);
-    $code = curl_getinfo($handle, CURLINFO_HTTP_CODE);
     curl_close($handle);
     return $response;
 
