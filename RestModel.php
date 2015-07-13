@@ -12,7 +12,7 @@ class RestModel
     protected $location;
 
     public function __construct($data){
-        
+
        // $this->link = mysqli_connect("localhost","root","","doctor");
         if(count($data)>1){
         $this->hour = $data['hour'];
@@ -49,7 +49,7 @@ class RestModel
 
 
         if($this->checkDB() !== true){
-            $this->msg = "appointment already exists pick a new date or doctor";
+            $this->msg = array("Message" =>  "Appointment already exists pick a new date or doctor");
            return $this->msg;
         }else{
           //  $this->insertInDB();
