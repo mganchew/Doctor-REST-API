@@ -1,4 +1,5 @@
 <?php
+require 'vendor/autoload.php';
 require 'RestModel.php';
 $scriptNameParts = explode('/', $_SERVER['SCRIPT_NAME']);
 
