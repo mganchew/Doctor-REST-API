@@ -1,6 +1,7 @@
 <?php
 require 'vendor/autoload.php';
 require 'RestModel.php';
+
 $scriptNameParts = explode('/', $_SERVER['SCRIPT_NAME']);
 $data = $_POST;
 
@@ -10,17 +11,18 @@ switch ($scriptNameParts[1]){
 
     case "appointment":
 
-        $test = $obj->appointment();
+        $response = $obj->appointment();
         break;
 
     case "checkAppointments":
-        $test = $obj->checkAppointment();
+        $response = $obj->checkAppointment();
         break;
 
-    case "register":
+    default:
+        $response = json_encode("The request URL is missing");
 
-        //TODO: enter code for registration
+
 
 }
 
-echo $test;
+echo $response;

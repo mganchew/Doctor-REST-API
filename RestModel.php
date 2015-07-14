@@ -34,7 +34,7 @@ class RestModel
             $private_key
         );
 
-        $client = new Google_Client();
+        $client = new Google_client();
         $client->setAssertionCredentials($credentials);
         if ($client->getAuth()->isAccessTokenExpired()) {
             $client->getAuth()->refreshTokenWithAssertion();
