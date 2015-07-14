@@ -1,5 +1,5 @@
 <?php
-require 'Curl.php';
+require 'autoload.php';
 $data = ["user" => "m.ganchew@gmail.com", "hour" => "10:00", "doctor" => "asdqwe@asda", "spec" => "123asd", "location" => "Plovdiv"];
 
 $request = new Curl("checkAppointments",$data);

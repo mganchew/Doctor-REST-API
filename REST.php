@@ -1,6 +1,6 @@
 <?php
 require 'vendor/autoload.php';
-require 'RestModel.php';
+require 'autoload.php';
 
 $scriptNameParts = explode('/', $_SERVER['SCRIPT_NAME']);
 $data = $_POST;
