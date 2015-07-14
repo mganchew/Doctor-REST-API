@@ -8,14 +8,15 @@
 
 class Curl {
 
+    protected $uri;
     protected $url;
     protected $data;
     protected $rawData;
     protected $postData;
 
-    public function __construct($url,$data){
+    public function __construct($uri,$data){
 
-        $this->url = $url;
+        $this->uri = $uri;
         if($data == null){
             throw new Exception("The provided data is empty");
         }
@@ -39,9 +40,22 @@ class Curl {
 
     }
 
+    public function setUrl(){
+
+        $this->url = "127.0.0.111:8081/" . $this->uri;
+
+    }
+
+    public function getUrl(){
+
+        return $this->url;
+
+    }
+
     public function getResponse(){
 
         $this->setPostData();
+        $this->setUrl();
         $credentials = base64_encode("");
         $headers = array(
 
@@ -50,7 +64,7 @@ class Curl {
         );
 
         $handle = curl_init();
-        curl_setopt($handle, CURLOPT_URL, $this->url);
+        curl_setopt($handle, CURLOPT_URL, $this->getUrl());
         curl_setopt($handle, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($handle, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($handle, CURLOPT_POST, true);
