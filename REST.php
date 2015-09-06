@@ -17,6 +17,22 @@ switch ($scriptNameParts[1]){
     case "checkAppointments":
         $response = $obj->checkAppointment();
         break;
+    
+    case "login":
+        $response = $obj->login();
+        break;
+    
+    case "specs":
+        $response = $obj->getAllSpecs();
+        break;
+    
+    case "Registration":
+        $response = $obj->Registration();
+        break;
+    
+    case "selectDoctorsBySpec":
+        $response = $obj->selectDoctorsBySpec();
+        break;
 
     default:
         $response = json_encode("The request URL is missing");
