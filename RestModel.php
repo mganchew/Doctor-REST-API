@@ -19,15 +19,20 @@ class RestModel {
     protected $lName;
     protected $fName;
     protected $loginInfo;
+    protected $fileContent;
 
     public function __construct($data) {
         
         $this->link = new PDO('mysql:host=localhost;dbname=test;charset=utf8', 'root', '');
-        
-        if($data['specId']){
+
+        if($data['user']){
+            $this->user = $data['user'];
+        }
+ 
+        if ($data['specId']) {
             $this->specId = $data['specId'];
         }
-        
+
         if ($data['password']) {
             $this->password = $data['password'];
         }
@@ -35,53 +40,51 @@ class RestModel {
         if ($data['email']) {
             $this->user = $data['email'];
         }
-        
-        if($data['loginInfo']){
+
+        if ($data['loginInfo']) {
             $this->loginInfo = $data['loginInfo'];
         }
-        
-        if($data['userId']){
+
+        if ($data['userId']) {
             $this->userId = $data['userId'];
         }
-        
+
         if (count($data) > 4 && isset($data['month'])) {
             $this->setDataForAppointment($data);
         }
-        
-        if(count($data) > 4 && isset($data['fName'])){
-            
+
+        if (count($data) > 4 && isset($data['fName'])) {
+
             $this->setDataForRegistration($data);
-            
         }
     }
-    
-    public function setDataForAppointment($data){
-        
-            $this->hour = $data['hour'];
-            $this->month = $data['month'];
-            $this->year = $data['year'];
-            $this->day = $data['day'];
-            $this->doctor = trim($data['doctor']);
-            $this->spec = $data['spec'];
-            $this->location = $data['address'];
-            $this->userId = $data['userId'];
-            $statement = "Select * FROM users WHERE id = '$this->userId'";
-            $stmt = $this->link->query($statement);
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            $this->user = $result[0]['email'];
-        
+
+    public function setDataForAppointment($data) {
+
+        $this->hour = $data['hour'];
+        $this->month = $data['month'];
+        $this->year = $data['year'];
+        $this->day = $data['day'];
+        $this->doctor = trim($data['doctor']);
+        $this->spec = $data['spec'];
+        $this->location = $data['address'];
+        $this->userId = $data['userId'];
+        $this->fileContent = $data['file'];
+        $statement = "Select * FROM users WHERE id = '$this->userId'";
+        $stmt = $this->link->query($statement);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $this->user = $result[0]['email'];
     }
-    
-    public function setDataForRegistration($data){
-        
+
+    public function setDataForRegistration($data) {
+
         $this->user = $data['email'];
         $this->fName = $data['fName'];
         $this->lName = $data['lName'];
         $this->password = $data['password'];
-        if($data['specId']){
+        if ($data['specId']) {
             $this->specId = $data['specId'];
         }
-        
     }
 
     public function getClient() {
@@ -113,9 +116,10 @@ class RestModel {
             $this->insertInDB();
 
             $this->insertInCalendar();
+            $this->fileUpload();
             $this->msg = array("msg" => "Часът е успешно запазен.", "redirectPage" => "appointments.php", "status" => "ok");
         }
-        
+
         return json_encode($this->msg);
     }
 
@@ -190,36 +194,39 @@ class RestModel {
     }
 
     public function checkAppointment() {
-        
+
         $statement = "Select * FROM appointments WHERE userId = '$this->userId'";
         $stmt = $this->link->query($statement);
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
-        
+
+
         if (count($result) == 0) {
             $this->msg = array("Message" => "Няма намери часове.");
             return json_encode($this->msg);
         }
-        
-        
+
+
         return json_encode($result);
     }
 
     public function login() {
 
         $statement = "Select * FROM users WHERE email = '$this->user' and password = '$this->password'";
-        
-        if($this->loginInfo == "Доктор"){
+
+        if ($this->loginInfo == "Доктор") {
             $statement = "Select * FROM doctors WHERE email = '$this->user' and password = '$this->password'";
         }
-        
+
         $stmt = $this->link->query($statement);
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         if ($result) {
             $this->userId = $result[0]['id'];
-
-            $response = ['user' => $this->user, 'userId' => $this->userId, 'redirectPage' => 'home.php'];
+            $redirection = 'uploadFileForm.php';
+            if($this->loginInfo == "Доктор"){
+                $redirection = 'viewPacientData.php';
+            }
+            $response = ['user' => $this->user, 'userId' => $this->userId, 'redirectPage' => $redirection];
             return json_encode($response);
         }
     }
@@ -231,40 +238,55 @@ class RestModel {
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return json_encode($result);
     }
-    
-    public function Registration(){
-        
+
+    public function Registration() {
+
         $val = $this->regInfo;
-        
+
         $statement = "INSERT INTO users(fName,lName,email,password) "
                 . "VALUES('" . $this->fName . "',"
                 . "'" . $this->lName . "',"
                 . "'" . $this->user . "',"
                 . "'" . $this->password . "')";
-        
-        if($this->specId){
-        $statement = "INSERT INTO doctors(fName,lName,specId,email,password) "
-                . "VALUES('" . $this->fName . "',"
-                . "'" . $this->lName . "',"
-                . "'" . $this->specId . "',"
-                . "'" . $this->user . "',"
-                . "'" . $this->password . "')";
+
+        if ($this->specId) {
+            $statement = "INSERT INTO doctors(fName,lName,specId,email,password) "
+                    . "VALUES('" . $this->fName . "',"
+                    . "'" . $this->lName . "',"
+                    . "'" . $this->specId . "',"
+                    . "'" . $this->user . "',"
+                    . "'" . $this->password . "')";
         }
-        
+
         $this->link->query($statement);
-        
+
         $response = ['msg' => 'Регистрацията е успешна!Може да влезнете в системата.'];
-       
+
         return json_encode($response);
-        
     }
-    
-    public function selectDoctorsBySpec(){
-        
+
+    public function selectDoctorsBySpec() {
+
         $statement = "Select * FROM doctors WHERE specId = " . $this->specId;
         $stmt = $this->link->query($statement);
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return json_encode($result);
+    }
+
+    public function fileUpload() {
+        
+        $statement = "INSERT INTO file(file,doctor) VALUES('".  $this->fileContent . "','" . $this->doctor . "')";
+        $stmt = $this->link->query($statement);
+        
+    }
+    
+    public function checkFiles(){
+        
+        $statement = "Select * FROM file WHERE doctor = '" . $this->user . "'";
+        $stmt = $this->link->query($statement);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return json_encode($result);
+        
     }
 
     public function enterAllSpecs() {
@@ -280,7 +302,5 @@ class RestModel {
 
         echo "good";
     }
-    
-    
 
 }

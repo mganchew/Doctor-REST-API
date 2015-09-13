@@ -9,5 +9,6 @@ $response = json_decode($json, true);
 
 $_SESSION['user'] = $response['user'];
 $_SESSION['userId'] = $response['userId'];
+$_SESSION['userInfo'] = $data['loginInfo'];
 
 header("Location:" . $response['redirectPage']);

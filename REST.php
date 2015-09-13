@@ -33,10 +33,14 @@ switch ($scriptNameParts[1]){
     case "selectDoctorsBySpec":
         $response = $obj->selectDoctorsBySpec();
         break;
+    
+    case "checkFiles":
+       
+        $response = $obj->checkFiles();
+        break;
 
     default:
         $response = json_encode("The request URL is missing");
-
 
 
 }

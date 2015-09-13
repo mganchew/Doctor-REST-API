@@ -21,7 +21,7 @@ class Curl {
         if($data == null){
            $this->getMethod = true;
         }
-        
+       
         $this->data = $data;
 
     }
@@ -56,7 +56,8 @@ class Curl {
 
     public function getResponse(){
 
-        if(!$this->getMethod){
+        //var_dump($this->postData);
+        if(!$this->getMethod || !$this->postData){
         $this->setPostData();
         }
         $this->setUrl();

@@ -21,7 +21,7 @@ class Curl {
             throw new Exception("The provided data is empty");
         }
         $this->data = $data;
-
+        
     }
 
     public function setPostData(){
@@ -53,7 +53,7 @@ class Curl {
     }
 
     public function getResponse(){
-
+        
         $this->setPostData();
         $this->setUrl();
         $credentials = base64_encode("");

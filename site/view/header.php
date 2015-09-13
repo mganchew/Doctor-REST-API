@@ -1,5 +1,7 @@
 <?php
 session_start();
+error_reporting(0);
+
 if (!$_SESSION['user'] && $_SERVER['SCRIPT_NAME'] != "/startPage.php") {
     header("Location:startPage.php");
 }
@@ -36,7 +38,14 @@ if (!$_SESSION['user'] && $_SERVER['SCRIPT_NAME'] != "/startPage.php") {
                 <div class = "collapse navbar-collapse navHeaderCollapse">
 
                     <ul class = "nav navbar-nav navbar-right">
-                        <li><a href = "home.php">Начало</a></li>
+                        <?php 
+                        if($_SESSION['userInfo'] == "Доктор"){?>
+                            <li><a href = "viewPacientData.php">Начало</a></li>
+                            <?php
+                        }else{
+                        ?>
+                            <li><a href = "uploadFileForm.php">Начало</a></li>
+                        <?php } ?>
                         <li><a href = "appointments.php">Вашите часове</a></li>
                         <?php if (isset($_SESSION['user'])) { ?>
                             <li><a href="">

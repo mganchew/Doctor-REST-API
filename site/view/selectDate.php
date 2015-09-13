@@ -152,10 +152,11 @@ $hours = array('08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '1
 
             </div>
         </div>
-
+        
         <div>
             <input type="hidden" name="address" value="<?= $rawData['results'][2]['formatted_address'] ?>">
             <input type="hidden" name="userId" value="<?=$_SESSION['userId']?>">
+            <input type="hidden" name="file" value="<?=$_SESSION['file']?>">
             <div class = "text-center">
                 <button type="submit" class="btn btn-lg btn-default" > <i class="fa fa-google-plus"></i>Запазване на час!</button>  
             </div>

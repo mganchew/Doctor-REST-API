@@ -7,18 +7,7 @@ if(!is_dir($target_dir)){
 $target_file = $target_dir . basename($_FILES["uploadFile"]["name"]);
 $uploadOk = 1;
 $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
-// Check if image file is a actual image or fake image
-//if(isset($_POST["submit"])) {
-//    $check = getimagesize($_FILES["uploadFile"]["tmp_name"]);
-//    if($check !== false) {
-//        echo "File is an image - " . $check["mime"] . ".";
-//        $uploadOk = 1;
-//    } else {
-//        echo "File is not an image.";
-//        $uploadOk = 0;
-//    }
-//}
-// Check if file already exists
+
 if (file_exists($target_file)) {
     echo "Sorry, file already exists.";
     $uploadOk = 0;
@@ -40,3 +29,31 @@ if ($uploadOk == 0) {
         echo "Sorry, there was an error uploading your file.";
     }
 }
+
+
+
+
+$target_dir = "uploads/";
+      
+        if (!is_dir($target_dir)) {
+            mkdir('uploads', 0777);
+        }
+        $target_file = $target_dir . basename($this->fileContent["filename"]);
+        $uploadOk = 1;
+        $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
+
+        if (file_exists($target_file)) {
+
+            $response = ['msg' => "Sorry, file already exists."];
+            return json_encode($response);
+        }
+
+
+// Check if $uploadOk is set to 0 by an error
+
+        if (move_uploaded_file($this->fileContent["tmp_file"], $target_file)) {
+            $response = ['msg' => "The file " . basename($this->fileContent["filename"]) . " has been uploaded."];
+            return json_encode($response);
+        }
+
+        return json_encode(['msg'=>'fail to upload file for some unknown reason']);
