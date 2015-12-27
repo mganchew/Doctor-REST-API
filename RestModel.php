@@ -23,7 +23,7 @@ class RestModel {
 
     public function __construct($data) {
         
-        $this->link = new PDO('mysql:host=localhost;dbname=test;charset=utf8', 'root', '');
+        $this->link = new PDO('mysql:host=localhost;dbname=mladenapi;charset=utf8', 'root', '');
 
         if($data['user']){
             $this->user = $data['user'];
@@ -50,6 +50,7 @@ class RestModel {
         }
 
         if (count($data) > 4 && isset($data['month'])) {
+
             $this->setDataForAppointment($data);
         }
 
@@ -106,7 +107,6 @@ class RestModel {
     }
 
     public function appointment() {
-
 
         if ($this->checkDB() !== false) {
             $this->msg = array("msg" => "Избраният от вас час е вече зает.Моля изберете нов час или различен доктор!",
@@ -234,6 +234,16 @@ class RestModel {
     public function getAllSpecs() {
 
         $statement = "Select * FROM specs";
+
+        $stmt = $this->link->query($statement);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return json_encode($result);
+    }
+
+    public function getSpecsWithDoctors() {
+        
+        $statement = "Select specs.id, specs.name FROM specs RIGHT JOIN doctors ON specs.id = doctors.specId";
+
         $stmt = $this->link->query($statement);
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return json_encode($result);

@@ -11,6 +11,10 @@ if (!$_SESSION['user'] && $_SERVER['SCRIPT_NAME'] != "/startPage.php") {
     <head>
         <meta charset="UTF-8">
         <meta name = "viewport" content ="width = device-width , initial-scale=1.0">
+
+        <!-- jQuery 1.11.3 lib  -->
+        <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
@@ -25,7 +29,7 @@ if (!$_SESSION['user'] && $_SERVER['SCRIPT_NAME'] != "/startPage.php") {
         <div class = "navbar navbar-inverse navbar-static-top">
             <div class = "container">
 
-                <a href = "home.php" class = "navbar-brand">Курсов проект</a>
+                <a href = "uploadFileForm.php" class = "navbar-brand">Курсов проект</a>
 
                 <button class = "navbar-toggle" data-toggle = "collapse" data-target = ".navHeaderCollapse">
 

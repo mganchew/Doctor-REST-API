@@ -8,6 +8,5 @@ $json = $request->getResponse();
 
 $response = json_decode($json, true);
 
-
 header("Location:" . $response['redirectPage'] . "?msg=" . $response['msg']);
 

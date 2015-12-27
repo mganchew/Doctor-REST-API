@@ -2,12 +2,12 @@
 require 'vendor/autoload.php';
 require 'autoload.php';
 
-$scriptNameParts = explode('/', $_SERVER['SCRIPT_NAME']);
+$scriptNameParts = explode('/', $_SERVER['REQUEST_URI']);
 $data = $_POST;
 
 $obj = new RestModel($data);
 
-switch ($scriptNameParts[1]){
+switch ($scriptNameParts[2]){
 
     case "appointment":
 
@@ -24,6 +24,10 @@ switch ($scriptNameParts[1]){
     
     case "specs":
         $response = $obj->getAllSpecs();
+        break;
+
+    case "getSpecsWithDoctors":
+        $response = $obj->getSpecsWithDoctors();
         break;
     
     case "Registration":
