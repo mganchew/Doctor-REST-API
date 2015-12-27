@@ -2,7 +2,7 @@
 session_start();
 error_reporting(0);
 
-if (!$_SESSION['user'] && $_SERVER['SCRIPT_NAME'] != "/startPage.php") {
+if (!$_SESSION['user'] && $_SERVER['SCRIPT_NAME'] != "/site/view/startPage.php") {
     header("Location:startPage.php");
 }
 ?>

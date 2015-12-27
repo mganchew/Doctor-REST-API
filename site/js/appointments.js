@@ -29,18 +29,6 @@ function populateDoctors (data) {
     });
 }
 
-$.ajax({
-    type: 'GET',
-    url: "http://appointment.dev/REST.php/getSpecsWithDoctors",
-    dataType: 'json',
-    success: function (data) {
-        populateSpecs(data);
-    },
-    error: function() {
-        console.log('error');
-    },    
-});
-
 function submitForm(values) {
     
     var uri = "http://appointment.dev/site/view/";
@@ -70,6 +58,18 @@ function populateSpecs (data) {
         options.append($("<option />").val(this.id).text(this.name));
     });
 }
+
+$.ajax({
+    type: 'GET',
+    url: "http://appointment.dev/REST.php/getSpecsWithDoctors",
+    dataType: 'json',
+    success: function (data) {
+        populateSpecs(data);
+    },
+    error: function() {
+        console.log('error');
+    },    
+});
 
 $( document ).ready(function() {
     

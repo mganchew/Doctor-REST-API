@@ -44,7 +44,7 @@ class Curl {
 
     public function setUrl(){
 
-        $this->url = "127.0.0.111:8081/" . $this->uri;
+        $this->url = "http://appointment.dev/REST.php/" . $this->uri;
 
     }
 
