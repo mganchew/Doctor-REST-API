@@ -5,7 +5,10 @@ $request = new Curl("specs", []);
 
 $json = $request->getResponse();
 $response = json_decode($json, true);
+
 ?>
+
+<script type="text/javascript" src="../js/doctorReg.js"></script>
 
 <div class = "container text-center">
     <div class = "col-md-3">
@@ -23,14 +26,8 @@ $response = json_decode($json, true);
 
 
             <label for = "spec">Направление</label>
-            <select class="form-control" name="specId">
-                <?php
-                foreach ($response as $spec) {
-                    ?>
-                    <option value="<?= $spec['id'] ?>"><?= $spec['name'] ?></option>
-                    <?php
-                }
-                ?>
+            <select class="form-control" name="specId" id="specName">
+               <option selected disabled>Изберете направление от списъка</option>
             </select>
 
             <label for="email">e-mail адрес</label>

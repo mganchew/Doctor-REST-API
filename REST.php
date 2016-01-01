@@ -1,7 +1,7 @@
 <?php
+header('Access-Control-Allow-Origin: *');
 require 'vendor/autoload.php';
 require 'autoload.php';
-
 $scriptNameParts = explode('/', $_SERVER['REQUEST_URI']);
 $data = $_POST;
 

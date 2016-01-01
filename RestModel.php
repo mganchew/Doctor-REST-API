@@ -23,7 +23,7 @@ class RestModel {
 
     public function __construct($data) {
         
-        $this->link = new PDO('mysql:host=localhost;dbname=mladenapi;charset=utf8', 'root', '');
+        $this->link = new PDO('mysql:host=localhost;dbname=test;charset=utf8', 'root', '');
 
         if($data['user']){
             $this->user = $data['user'];
