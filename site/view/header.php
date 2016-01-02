@@ -2,9 +2,9 @@
 session_start();
 error_reporting(0);
 
-if (!$_SESSION['user'] && $_SERVER['SCRIPT_NAME'] != "/site/view/startPage.php") {
-    header("Location:startPage.php");
-}
+//if (!$_SESSION['user'] && $_SERVER['SCRIPT_NAME'] != "/site/view/startPage.php") {
+//    header("Location:startPage.php");
+//}
 ?>
 <!DOCTYPE html>
 <html>
@@ -42,22 +42,27 @@ if (!$_SESSION['user'] && $_SERVER['SCRIPT_NAME'] != "/site/view/startPage.php")
                 <div class = "collapse navbar-collapse navHeaderCollapse">
 
                     <ul class = "nav navbar-nav navbar-right">
-                        <?php 
-                        if($_SESSION['userInfo'] == "Доктор"){?>
+                        <?php if ($_SESSION['userInfo'] == "Доктор") { ?>
                             <li><a href = "viewPacientData.php">Начало</a></li>
                             <?php
-                        }else{
-                        ?>
+                        } else {
+                            ?>
                             <li><a href = "uploadFileForm.php">Начало</a></li>
                         <?php } ?>
                         <li><a href = "appointments.php">Вашите часове</a></li>
                         <?php if (isset($_SESSION['user'])) { ?>
-                            <li><a href="">
+
+                            <li><a href="profile.php"><span class="glyphicon glyphicon-user"></span>
                                     <?php
                                     echo $_SESSION['user'];
                                     ?>
-                                </a></li>
-                            <li><p class="navbar-btn pull-right"><a href="logout.php">Logout</a></p></li>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="profile.php?editable=1"><span class="glyphicon glyphicon-pencil"></span> Edit Profile</a>
+                            </li>
+
+                            <li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></p></li>
                             <?php } ?>
                     </ul>
 
