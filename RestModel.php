@@ -20,6 +20,7 @@ class RestModel {
     protected $fName;
     protected $loginInfo;
     protected $fileContent;
+    protected $userInfo;
 
     public function __construct($data) {
         
@@ -58,6 +59,12 @@ class RestModel {
 
             $this->setDataForRegistration($data);
         }
+    }
+    
+    public function setDataForProfile($data){
+        
+        $this->user = $data['user'];
+        
     }
 
     public function setDataForAppointment($data) {
@@ -230,6 +237,24 @@ class RestModel {
             return json_encode($response);
         }
     }
+    
+    public function loadProfileInfo() {
+
+        $statement = "Select * FROM users WHERE email = '$this->user'";
+
+        if ($this->loginInfo == "Доктор") {
+            $statement = "Select * FROM doctors WHERE email = '$this->user'";
+        }
+
+        $stmt = $this->link->query($statement);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($result) {
+            $this->userId = $result[0]['id'];
+            $response = ['data' => $result[0]];
+            return json_encode($response);
+        }
+    }
 
     public function getAllSpecs() {
 
@@ -290,7 +315,34 @@ class RestModel {
         
     }
     
-    public function checkFiles(){
+    public function loadUpdateInfo($data){
+        
+        $this->user = $data['email'];
+        $this->fName = $data['fName'];
+        $this->lName = $data['lName'];
+        $this->userInfo = $data['userInfo'];
+        
+    }
+
+
+    public function updateProfile(){
+        
+        $statement = "UPDATE users SET fName='" . $this->fName . "',"
+                . " lName='" . $this->lName . "',userInfo = '" . $this->userInfo . "'"
+                . " WHERE email='" . $this->user . "'";
+        try{
+        $this->link->query($statement);
+        }  catch (Exception $e){
+            return json_encode($e);
+        }
+        
+        $response = ['msg' => 'Успешно обновихте вашият профил'];
+
+        return json_encode($response);
+        
+    }
+
+        public function checkFiles(){
         
         $statement = "Select * FROM file WHERE doctor = '" . $this->user . "'";
         $stmt = $this->link->query($statement);

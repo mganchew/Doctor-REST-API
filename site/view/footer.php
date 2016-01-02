@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse navbar-fixed-bottom">
+<br><br><br><br><nav class="navbar navbar-inverse navbar-fixed-bottom">
     <div class="container">
         <p class="navbar-text">Created by Mladen Ganchev</p>
         <div class="nav navbar-nav navbar-right">
@@ -9,9 +9,7 @@
                 <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
             </form>
         </div>
-
     </div>
 </nav>
 </body>
-
 </html>	

@@ -42,7 +42,16 @@ switch ($scriptNameParts[2]){
        
         $response = $obj->checkFiles();
         break;
-
+    
+    case "loadProfileInfo":
+        $response = $obj->loadProfileInfo();
+        break;
+    
+    case "updateProfile":
+        $obj->loadUpdateInfo($data);
+        $response = $obj->updateProfile();
+        break;
+    
     default:
         $response = json_encode("The request URL is missing");
 

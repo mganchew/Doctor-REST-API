@@ -1,12 +1,25 @@
 <?php
 require_once 'header.php';
-$_SESSION['user'] = 'test';
-$_SESSION['userInfo'] = "Доктор";
 $editable = '';
 if (!isset($_GET['editable'])) {
     $editable = "disabled";
 }
 ?>
+<script type="text/javascript" src="../js/profile.js"></script>
+<?php if ($_GET['msg']) { ?>
+    <div class="container text-center">
+        <h4 class="text-center ">
+            <?php
+            $color = "green";
+            ?>
+            <font color="<?= $color ?>">
+            <?php
+            echo $_GET['msg'];
+            ?>
+            </font></h4>
+    </div> 
+<?php } ?>
+
 
 <div class="container">
 
@@ -15,33 +28,33 @@ if (!isset($_GET['editable'])) {
             <a href="#" class="thumbnail">
                 <img src="1.jpg" alt="...">
             </a>
-            <div class="caption text-center">
+            <div class="caption text-center" id="userInfo">
                 <h3>Кратко описание</h3>
-                <p>...</p>
+                <p></p>
             </div>
         </div>
 
 
         <div class="col-md-6 text-center" >
-            <form method="POST" name="profileEdit">
+            <form method="POST" name="profileEdit" id="profileEdit">
                 <div>
                     <label for="firstName">Име</label>
                 </div>
                 <div>
-                    <input type="text" name="firstName"<?= $editable ?>>
+                    <input type="text" id="fName" name="fName"<?= $editable ?>>
                 </div><br>
 
                 <div>
                     <label for="lastName">Фамилия</label>
                 </div>
                 <div>
-                    <input type="text" name="lastName"<?= $editable ?>>
+                    <input type="text" id="lName" name="lName"<?= $editable ?>>
                 </div><br>
                 <div>
                     <label for="email">Имейл</label>
                 </div>
                 <div>
-                    <input type="text" name="email"<?= $editable ?>>
+                    <input type="text" id="email" name="email"<?= $editable ?>>
                 </div><br>
                 <?php if ($_SESSION['userInfo'] == "Доктор") { ?>
                     <div>
@@ -64,7 +77,7 @@ if (!isset($_GET['editable'])) {
                         <label for="shortDescription">Кратко описание</label>
                     </div>
                     <div>
-                        <textarea style="width: 286px; height: 162px;" name="shortDescription"<?= $editable ?>></textarea>
+                        <textarea style="width: 286px; height: 162px;"id="userInfo" name="userInfo"<?= $editable ?>></textarea>
                     </div><br>
 
                     <div>

@@ -2,9 +2,9 @@
 session_start();
 error_reporting(0);
 
-//if (!$_SESSION['user'] && $_SERVER['SCRIPT_NAME'] != "/site/view/startPage.php") {
-//    header("Location:startPage.php");
-//}
+if (!$_SESSION['user'] && $_SERVER['SCRIPT_NAME'] != "/site/view/startPage.php") {
+    header("Location:startPage.php");
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -54,14 +54,14 @@ error_reporting(0);
                         <li><a href = "appointments.php">Вашите часове</a></li>
                         <?php if (isset($_SESSION['user'])) { ?>
 
-                            <li><a href="profile.php?user=<?=$_SESSION['user']?>"><span class="glyphicon glyphicon-user"></span>
+                            <li><a href="profile.php?user=<?=$_SESSION['user']?>&type=<?=$_SESSION['userInfo']?>"><span class="glyphicon glyphicon-user"></span>
                                     <?php
                                     echo $_SESSION['user'];
                                     ?>
                                 </a>
                             </li>
                             <li>
-                                <a href="profile.php?user=<?=$_SESSION['user']?>&editable=1"><span class="glyphicon glyphicon-pencil"></span> Edit Profile</a>
+                                <a href="profile.php?user=<?=$_SESSION['user']?>&editable=1&type=<?=$_SESSION['userInfo']?>"><span class="glyphicon glyphicon-pencil"></span> Edit Profile</a>
                             </li>
 
                             <li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></p></li>
