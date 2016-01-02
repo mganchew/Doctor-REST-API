@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-fixed-bottom">
+<nav class="navbar navbar-inverse navbar-fixed-bottom">
     <div class="container">
         <p class="navbar-text">Created by Mladen Ganchev</p>
         <div class="nav navbar-nav navbar-right">

@@ -1,6 +1,5 @@
 <?php
 
-
 require '../../autoload.php';
 require 'header.php';
 $target_dir = __DIR__ . "/uploads/";
