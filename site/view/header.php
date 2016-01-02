@@ -30,6 +30,7 @@ error_reporting(0);
             <div class = "container">
 
                 <a href = "uploadFileForm.php" class = "navbar-brand">Курсов проект</a>
+                
 
                 <button class = "navbar-toggle" data-toggle = "collapse" data-target = ".navHeaderCollapse">
 
@@ -42,6 +43,7 @@ error_reporting(0);
                 <div class = "collapse navbar-collapse navHeaderCollapse">
 
                     <ul class = "nav navbar-nav navbar-right">
+
                         <?php if ($_SESSION['userInfo'] == "Доктор") { ?>
                             <li><a href = "viewPacientData.php">Начало</a></li>
                             <?php
@@ -52,14 +54,14 @@ error_reporting(0);
                         <li><a href = "appointments.php">Вашите часове</a></li>
                         <?php if (isset($_SESSION['user'])) { ?>
 
-                            <li><a href="profile.php"><span class="glyphicon glyphicon-user"></span>
+                            <li><a href="profile.php?user=<?=$_SESSION['user']?>"><span class="glyphicon glyphicon-user"></span>
                                     <?php
                                     echo $_SESSION['user'];
                                     ?>
                                 </a>
                             </li>
                             <li>
-                                <a href="profile.php?editable=1"><span class="glyphicon glyphicon-pencil"></span> Edit Profile</a>
+                                <a href="profile.php?user=<?=$_SESSION['user']?>&editable=1"><span class="glyphicon glyphicon-pencil"></span> Edit Profile</a>
                             </li>
 
                             <li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></p></li>

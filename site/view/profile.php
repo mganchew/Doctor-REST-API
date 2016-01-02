@@ -1,6 +1,7 @@
 <?php
 require_once 'header.php';
 $_SESSION['user'] = 'test';
+$_SESSION['userInfo'] = "Доктор";
 $editable = '';
 if (!isset($_GET['editable'])) {
     $editable = "disabled";
@@ -15,7 +16,7 @@ if (!isset($_GET['editable'])) {
                 <img src="1.jpg" alt="...">
             </a>
             <div class="caption text-center">
-                <h3>Short Description</h3>
+                <h3>Кратко описание</h3>
                 <p>...</p>
             </div>
         </div>
@@ -24,50 +25,62 @@ if (!isset($_GET['editable'])) {
         <div class="col-md-6 text-center" >
             <form method="POST" name="profileEdit">
                 <div>
-                    <label for="firstName">First Name:</label>
+                    <label for="firstName">Име</label>
+                </div>
+                <div>
                     <input type="text" name="firstName"<?= $editable ?>>
                 </div><br>
 
                 <div>
-                    <label for="lastName">Last Name:</label>
+                    <label for="lastName">Фамилия</label>
+                </div>
+                <div>
                     <input type="text" name="lastName"<?= $editable ?>>
                 </div><br>
                 <div>
-                    <label for="email">Email:</label>
-                    <input type="text" name="email"<?= $editable ?>>
-                </div><br>
+                    <label for="email">Имейл</label>
+                </div>
                 <div>
-                    <label for="email">Email:</label>
                     <input type="text" name="email"<?= $editable ?>>
                 </div><br>
-                <div>
-                    <label for="email">Email:</label>
-                    <input type="text" name="email"<?= $editable ?>>
-                </div><br>
-                <div>
-                    <label for="email">Email:</label>
-                    <input type="text" name="email"<?= $editable ?>>
-                </div><br>
+                <?php if ($_SESSION['userInfo'] == "Доктор") { ?>
+                    <div>
+                        <label for="email">Направление</label>
+                    </div>
+                    <div>
+                        <input type="text" name="email"<?= $editable ?>>
+                    </div><br>
+                    <div>
+                        <label for="email">Адрес на месторабота</label>
+                    </div>
+                    <div>
+                        <input type="text" name="email"<?= $editable ?>>
+                    </div><br>
+                <?php } ?>
                 <?php
                 if ($editable == '') {
                     ?>
                     <div>
-                        <label for="shortDescription">Short Description:</label>
+                        <label for="shortDescription">Кратко описание</label>
+                    </div>
+                    <div>
                         <textarea style="width: 286px; height: 162px;" name="shortDescription"<?= $editable ?>></textarea>
                     </div><br>
+
+                    <div>
+                        <button type="submit" name="submit" id="submit"  class="btn btn-success">Update</button>
+                    </div>
                     <?php
                 }
                 ?>
 
-                <div>
-                    <button type="submit" name="submit" id="submit"  class="btn btn-success">Update</button>
-                </div>
+
 
             </form>
         </div>
 
         <div class="col-md-3 text-center" >
-            
+            <h3>INFO FROM FITBIT!!!!</h3>
         </div>
 
     </div>
