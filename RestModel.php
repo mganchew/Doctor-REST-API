@@ -21,15 +21,17 @@ class RestModel {
     protected $loginInfo;
     protected $fileContent;
     protected $userInfo;
+    protected $workAddress;
+    protected $doctorFlag;
 
     public function __construct($data) {
-        
+
         $this->link = new PDO('mysql:host=localhost;dbname=test;charset=utf8', 'root', '');
 
-        if($data['user']){
+        if ($data['user']) {
             $this->user = $data['user'];
         }
- 
+
         if ($data['specId']) {
             $this->specId = $data['specId'];
         }
@@ -59,12 +61,6 @@ class RestModel {
 
             $this->setDataForRegistration($data);
         }
-    }
-    
-    public function setDataForProfile($data){
-        
-        $this->user = $data['user'];
-        
     }
 
     public function setDataForAppointment($data) {
@@ -230,7 +226,7 @@ class RestModel {
         if ($result) {
             $this->userId = $result[0]['id'];
             $redirection = 'uploadFileForm.php';
-            if($this->loginInfo == "Доктор"){
+            if ($this->loginInfo == "Доктор") {
                 $redirection = 'viewPacientData.php';
             }
             $response = ['user' => $this->user, 'userId' => $this->userId, 'redirectPage' => $redirection];
@@ -238,13 +234,14 @@ class RestModel {
         }
     }
     
+    public function setDataForProfile($data){
+        $this->user = $data['user'];
+        $this->doctorFlag = $data['doctorFlag'];
+    }
+
     public function loadProfileInfo() {
-
-        $statement = "Select * FROM users WHERE email = '$this->user'";
-
-        if ($this->loginInfo == "Доктор") {
-            $statement = "Select * FROM doctors WHERE email = '$this->user'";
-        }
+       $statement = "Select * FROM users WHERE email = '$this->user'";
+        
 
         $stmt = $this->link->query($statement);
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -266,7 +263,7 @@ class RestModel {
     }
 
     public function getSpecsWithDoctors() {
-        
+
         $statement = "Select specs.id, specs.name FROM specs RIGHT JOIN doctors ON specs.id = doctors.specId";
 
         $stmt = $this->link->query($statement);
@@ -309,46 +306,56 @@ class RestModel {
     }
 
     public function fileUpload() {
-        
-        $statement = "INSERT INTO file(file,doctor) VALUES('".  $this->fileContent . "','" . $this->doctor . "')";
+
+        $statement = "INSERT INTO file(file,doctor) VALUES('" . $this->fileContent . "','" . $this->doctor . "')";
         $stmt = $this->link->query($statement);
-        
     }
-    
-    public function loadUpdateInfo($data){
-        
+
+    public function loadUpdateInfo($data) {
+
         $this->user = $data['email'];
         $this->fName = $data['fName'];
         $this->lName = $data['lName'];
         $this->userInfo = $data['userInfo'];
-        
+
+        if ($data['doctorFlag'] == 1) {
+            $this->doctorFlag = 1;
+            $this->spec = $data['spec'];
+            $this->workAddress = $data['workAddress'];
+        }
     }
 
+    public function updateProfile() {
 
-    public function updateProfile(){
-        
         $statement = "UPDATE users SET fName='" . $this->fName . "',"
                 . " lName='" . $this->lName . "',userInfo = '" . $this->userInfo . "'"
                 . " WHERE email='" . $this->user . "'";
-        try{
-        $this->link->query($statement);
-        }  catch (Exception $e){
+
+        if ($this->doctorFlag == 1) {
+            $statement = "UPDATE doctors SET fName='" . $this->fName . "',"
+                    . " lName='" . $this->lName . "',userInfo = '" . $this->userInfo . "'"
+                    . ",spec = '" . $this->spec . "',"
+                    . " workAddress = '" . $this->workAddress . "'"
+                    . " WHERE email='" . $this->user . "'";
+        }
+
+        try {
+            $this->link->query($statement);
+        } catch (Exception $e) {
             return json_encode($e);
         }
-        
+
         $response = ['msg' => 'Успешно обновихте вашият профил'];
 
         return json_encode($response);
-        
     }
 
-        public function checkFiles(){
-        
+    public function checkFiles() {
+
         $statement = "Select * FROM file WHERE doctor = '" . $this->user . "'";
         $stmt = $this->link->query($statement);
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return json_encode($result);
-        
     }
 
     public function enterAllSpecs() {

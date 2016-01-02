@@ -56,18 +56,18 @@ if (!isset($_GET['editable'])) {
                 <div>
                     <input type="text" id="email" name="email"<?= $editable ?>>
                 </div><br>
-                <?php if ($_SESSION['userInfo'] == "Доктор") { ?>
+                <?php if ($_SESSION['userInfo'] == 2) { ?>
                     <div>
-                        <label for="email">Направление</label>
+                        <label for="spec">Направление</label>
                     </div>
                     <div>
-                        <input type="text" name="email"<?= $editable ?>>
+                        <input type="text" name="spec"<?= $editable ?>>
                     </div><br>
                     <div>
-                        <label for="email">Адрес на месторабота</label>
+                        <label for="workAddress">Адрес на месторабота</label>
                     </div>
                     <div>
-                        <input type="text" name="email"<?= $editable ?>>
+                        <input type="text" name="workAddress"<?= $editable ?>>
                     </div><br>
                 <?php } ?>
                 <?php

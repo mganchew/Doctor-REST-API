@@ -44,6 +44,7 @@ switch ($scriptNameParts[2]){
         break;
     
     case "loadProfileInfo":
+        $obj->setDataForProfile($data);
         $response = $obj->loadProfileInfo();
         break;
     

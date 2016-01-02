@@ -13,13 +13,15 @@ $.urlParam = function (name) {
     var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
     return results[1] || 0;
 }
-
+dataToSend = {user: $.urlParam('user'), doctorFlag: $.urlParam('type')};
+console.log(dataToSend);
 $.ajax({
     type: 'POST',
     url: "http://appointment.dev/REST.php/loadProfileInfo",
-    data: {user: $.urlParam('user')},
+    data: dataToSend,
     dataType: 'json',
     success: function (data) {
+        
         populateProfile('#profileEdit', data);
     },
     error: function () {
@@ -31,7 +33,14 @@ function submitForm(values) {
 
     var uri = "http://appointment.dev/site/view/profile.php";
     
-    if ($.urlParam('type') !== 'Доктор') {
+    userData = {
+        email: values['email'], fName: values['fName'],
+        lName: values['lName'],userInfo: values['userInfo'],
+        spec: values['spec'],workAddress: values['workAddress'],
+        doctorFlag: 1
+    };
+
+    if ($.urlParam('type') === "1") {
         
         userData = {email: values['email'], fName: values['fName'],
             lName: values['lName'],userInfo: values['userInfo']};
@@ -44,7 +53,6 @@ function submitForm(values) {
         data: userData,
         dataType: 'json',
         success: function (data) {
-            
             window.location.replace(uri + "?user=" + $.urlParam('user') + "&type=" + $.urlParam('type') + "&msg=" + data.msg);
         },
         error: function (data) {

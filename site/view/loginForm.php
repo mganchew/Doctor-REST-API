@@ -17,8 +17,8 @@
             
             <label for="password">Парола</label>
             <select class="form-control" name="loginInfo">
-                <option value="Доктор">Доктор</option>
-                <option value="Потребител">Потребител</option>
+                <option value="2">Доктор</option>
+                <option value="1">Потребител</option>
             </select><br>
             
             
