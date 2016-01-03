@@ -23,6 +23,7 @@ class RestModel {
     protected $userInfo;
     protected $workAddress;
     protected $doctorFlag;
+    protected $searchField;
 
     public function __construct($data) {
 
@@ -376,6 +377,21 @@ class RestModel {
         }
 
         echo "good";
+    }
+    
+    public function loadSearchData($data){
+        
+        $this->searchField = $data['searchField'];
+        
+    }
+    
+    public function search(){
+        
+        $statement = "Select * FROM doctors WHERE lName = '" . $this->searchField . "'";
+        $stmt = $this->link->query($statement);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return json_encode($result);
+        
     }
 
 }

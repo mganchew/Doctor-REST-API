@@ -33,7 +33,7 @@ $response = json_decode($json, true);
 <div class = "text-center">
     <?php
     $src = "https://www.google.com/calendar/embed?src=" . $mail[0] . "%40gmail.com&ctz=Europe/Sofia";
-    echo '<iframe src=' . $src . ' style = "border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>';
+    echo '<iframe id="doctorCalendar" src=' . $src . ' style = "border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>';
     ?>
 </div>
 <br>

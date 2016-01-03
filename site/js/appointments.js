@@ -1,5 +1,12 @@
 // Appointments logic 
 
+function getDoctorCalendar(doctorEmail){
+    
+    var email = doctorEmail;
+    console.log(email);
+    
+}
+
 function getAllDoctors(specId) {
     $.ajax({
         type: 'POST',
@@ -29,7 +36,7 @@ function populateDoctors (data) {
     });
 }
 
-function submitForm(values) {
+function submitAppointmentsForm(values) {
     
     var uri = "http://appointment.dev/site/view/";
 
@@ -71,13 +78,23 @@ $.ajax({
     },    
 });
 
+
+
 $( document ).ready(function() {
+    
+    
     
     $( "#specName" ).change(function() {
 
         var specId = $(this).val();
-
         getAllDoctors(specId);
+    });
+    
+    //TODO make it work
+    $("#doctorName").change(function() {
+        
+        var doctorEmail = $(this).val();
+        getDoctorCalendar(doctorEmail);
     });
 
     $( "#saveBtn" ).click(function(event) {
@@ -104,7 +121,7 @@ $( document ).ready(function() {
 
             console.log(values);
 
-            submitForm(values);
+            submitAppointmentsForm(values);
         }
     
     });

@@ -1,9 +1,9 @@
 
-function populateSpecs (data) {
-        
+function populateSpecs(data) {
+
     var options = $("#specName");
-    
-    $.each(data, function() {
+
+    $.each(data, function () {
 
         options.append($("<option />").val(this.id).text(this.name));
     });
@@ -16,19 +16,19 @@ $.ajax({
     success: function (data) {
         populateSpecs(data);
     },
-    error: function(data) {
+    error: function (data) {
         console.log(data);
         console.log('error');
-    },    
+    }
 });
 
 function populateProfile(frm, data) {
     $.each(data.data, function (key, value) {
         $('[name=' + key + ']', frm).val(value);
-        if(key === 'userInfo'){
+        if (key === 'userInfo') {
             $('#userInfo > p').text(value);
         }
-    });    
+    });
 
 }
 
@@ -37,14 +37,14 @@ $.urlParam = function (name) {
     return results[1] || 0;
 }
 dataToSend = {user: $.urlParam('user'), doctorFlag: $.urlParam('type')};
-console.log(dataToSend);
+
 $.ajax({
     type: 'POST',
     url: "http://appointment.dev/REST.php/loadProfileInfo",
     data: dataToSend,
     dataType: 'json',
     success: function (data) {
-        
+
         populateProfile('#profileEdit', data);
     },
     error: function () {
@@ -52,24 +52,24 @@ $.ajax({
     }
 });
 
-function submitForm(values) {
+function submitProfileForm(values) {
 
     var uri = "http://appointment.dev/site/view/profile.php";
-    
+
     userData = {
         email: values['email'], fName: values['fName'],
-        lName: values['lName'],userInfo: values['userInfo'],
-        specId: values['specId'],workAddress: values['workAddress'],
+        lName: values['lName'], userInfo: values['userInfo'],
+        specId: values['specId'], workAddress: values['workAddress'],
         doctorFlag: 1
     };
 
     if ($.urlParam('type') === "1") {
-        
+
         userData = {email: values['email'], fName: values['fName'],
-            lName: values['lName'],userInfo: values['userInfo']};
-        
+            lName: values['lName'], userInfo: values['userInfo']};
+
     }
-   
+
     $.ajax({
         type: 'POST',
         url: "http://appointment.dev/REST.php/updateProfile",
@@ -82,7 +82,7 @@ function submitForm(values) {
         },
         error: function (data) {
             //console.log('error');
-           window.location.replace(uri + "?user=" + $.urlParam('user') + "&type=" + $.urlParam('type') + "&msg=" + data.msg);
+            window.location.replace(uri + "?user=" + $.urlParam('user') + "&type=" + $.urlParam('type') + "&msg=" + data.msg);
         }
     });
 
@@ -91,7 +91,7 @@ function submitForm(values) {
 $(document).ready(function () {
 
 
-    $("#submit").click(function (event) {
+    $("#submitProfile").click(function (event) {
 
         event.preventDefault(); // cancel default behavior    
 
@@ -104,7 +104,7 @@ $(document).ready(function () {
             values[this.name] = $(this).val();
         });
 
-        submitForm(values);
+        submitProfileForm(values);
 
 
     });

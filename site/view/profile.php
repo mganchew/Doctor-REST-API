@@ -83,7 +83,7 @@ if (!isset($_GET['editable'])) {
                     </div><br>
 
                     <div>
-                        <button type="submit" name="submit" id="submit"  class="btn btn-success">Update</button>
+                        <button type="submit" name="submitProfile" id="submitProfile"  class="btn btn-success">Update</button>
                     </div>
                     <?php
                 }

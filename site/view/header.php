@@ -49,7 +49,7 @@ if (!$_SESSION['user'] && $_SERVER['SCRIPT_NAME'] != "/site/view/startPage.php")
                             <?php
                         } else {
                             ?>
-                            <li><a href = "uploadFileForm.php">Начало</a></li>
+                            <li><a href = "selectDate.php">Начало</a></li>
                         <?php } ?>
                         <li><a href = "appointments.php">Вашите часове</a></li>
                         <?php if (isset($_SESSION['user'])) { ?>

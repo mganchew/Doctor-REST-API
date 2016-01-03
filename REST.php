@@ -53,6 +53,11 @@ switch ($scriptNameParts[2]){
         $response = $obj->updateProfile();
         break;
     
+    case "search":
+        $obj->loadSearchData($data);
+        $response = $obj->search();
+        break;
+    
     default:
         $response = json_encode("The request URL is missing");
 
