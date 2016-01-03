@@ -53,6 +53,8 @@ function submitForm(values) {
         data: userData,
         dataType: 'json',
         success: function (data) {
+           // console.log(userData);
+            //console.log(data);
             window.location.replace(uri + "?user=" + $.urlParam('user') + "&type=" + $.urlParam('type') + "&msg=" + data.msg);
         },
         error: function (data) {

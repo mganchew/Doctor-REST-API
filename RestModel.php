@@ -236,11 +236,16 @@ class RestModel {
     
     public function setDataForProfile($data){
         $this->user = $data['user'];
-        $this->doctorFlag = $data['doctorFlag'];
+        $this->doctorFlag = $data['doctorFlag'] * 1;
     }
 
     public function loadProfileInfo() {
-       $statement = "Select * FROM users WHERE email = '$this->user'";
+        
+        $table = 'users';
+        if($this->doctorFlag == 2){
+            $table = 'doctors';
+        }
+       $statement = "Select * FROM $table WHERE email = '$this->user'";
         
 
         $stmt = $this->link->query($statement);
@@ -318,15 +323,16 @@ class RestModel {
         $this->lName = $data['lName'];
         $this->userInfo = $data['userInfo'];
 
-        if ($data['doctorFlag'] == 1) {
+        if ($data['doctorFlag'] == "1") {
             $this->doctorFlag = 1;
-            $this->spec = $data['spec'];
+            $this->spec = $data['spec'] * 1;
             $this->workAddress = $data['workAddress'];
         }
     }
 
     public function updateProfile() {
 
+        
         $statement = "UPDATE users SET fName='" . $this->fName . "',"
                 . " lName='" . $this->lName . "',userInfo = '" . $this->userInfo . "'"
                 . " WHERE email='" . $this->user . "'";
@@ -334,11 +340,11 @@ class RestModel {
         if ($this->doctorFlag == 1) {
             $statement = "UPDATE doctors SET fName='" . $this->fName . "',"
                     . " lName='" . $this->lName . "',userInfo = '" . $this->userInfo . "'"
-                    . ",spec = '" . $this->spec . "',"
+                    . ",specId = " . $this->spec . ","
                     . " workAddress = '" . $this->workAddress . "'"
                     . " WHERE email='" . $this->user . "'";
         }
-
+        //return json_encode($statement);
         try {
             $this->link->query($statement);
         } catch (Exception $e) {
