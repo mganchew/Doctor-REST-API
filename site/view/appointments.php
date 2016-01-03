@@ -39,23 +39,30 @@ $response = json_decode($json, true);
 <br>
 <div class="container">
     <?php
-    foreach($response as $appointment){
+    foreach ($response as $appointment) {
         $date = $appointment['time'];
 
         $doctor = $appointment['doctor'];
+        $user = $appointment['userId'];
         $now = time();
         $HRNow = date('d/m/y-h:i');
 
-        if (strcmp($date,$HRNow) > 0) {
-            ?>
-    <p><i><font color="green"> На <?= $date ?> часа имате запазен час при доктор <?= $doctor ?></font></i></p>
-            <?php
+        if (strcmp($date, $HRNow) > 0) {
+            if ($_SESSION['userInfo'] == 2) {
+                ?>
+                <p><i><font color="green"> На <?= $date ?> часа имате запазен час с пациент <?= $user ?></font></i></p>
+                <?php
+            } else {
+                ?>
+                <p><i><font color="green"> На <?= $date ?> часа имате запазен час при доктор <?= $doctor ?></font></i></p>
+                <?php
+            }
         }
     }
     ?>
 </div>
 
-<?php 
-require 'footer.php'; 
+<?php
+require 'footer.php';
 ?>
 

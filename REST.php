@@ -15,6 +15,7 @@ switch ($scriptNameParts[2]){
         break;
 
     case "checkAppointments":
+        $obj->setDataForAppointmentCheck($data);
         $response = $obj->checkAppointment();
         break;
     

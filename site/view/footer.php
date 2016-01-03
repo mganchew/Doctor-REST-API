@@ -1,3 +1,7 @@
+<?php
+if($_SESSION['userInfo']){
+    ?>
+
 <table class="table table-bordered" name="doctorsFromSearch" id="doctorsFromSearch">
     <thead>
         <tr>
@@ -27,5 +31,7 @@
         </div>
     </div>
 </nav>
+<?php }
+?>
 </body>
 </html>	

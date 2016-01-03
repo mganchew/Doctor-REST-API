@@ -192,10 +192,24 @@ class RestModel {
             echo $e;
         }
     }
+    
+    public function setDataForAppointmentCheck($data){
+        
+        $this->user = $data['user'];
+        $this->doctorFlag = $data['userInfo'] *1 ;
+        
+    }
 
     public function checkAppointment() {
 
         $statement = "Select * FROM appointments WHERE userId = '$this->userId'";
+        
+        if($this->doctorFlag == 2){
+            //TODO JOIN!!!
+            $statement = "Select * FROM appointments WHERE doctor = '$this->user'";
+            
+        }
+        
         $stmt = $this->link->query($statement);
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -381,7 +395,7 @@ class RestModel {
     }
     
     public function search(){
-        
+        //TODO JOIN
         $statement = "Select * FROM doctors WHERE lName = '" . $this->searchField . "'";
         $stmt = $this->link->query($statement);
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
