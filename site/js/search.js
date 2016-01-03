@@ -15,6 +15,7 @@ function submitSearchForm(values) {
                 table.append("<tr><td>" + elem.fName + "</td><td>" 
                         + elem.lName + "</td>   <td>" + elem.email +
                         "</td> <td>" + elem.workAddress + 
+                        "</td> <td>" + elem.specId + 
                         "</td> <td><a href='profile.php?user="+elem.email+"&type=2 '>View Profile"+
                         "</a></td></tr>");
             });
