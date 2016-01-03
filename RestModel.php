@@ -227,7 +227,7 @@ class RestModel {
 
         $statement = "Select * FROM users WHERE email = '$this->user' and password = '$this->password'";
 
-        if ($this->loginInfo == "Доктор") {
+        if ($this->loginInfo == 2) {
             $statement = "Select * FROM doctors WHERE email = '$this->user' and password = '$this->password'";
         }
 
@@ -237,7 +237,7 @@ class RestModel {
         if ($result) {
             $this->userId = $result[0]['id'];
             $redirection = 'uploadFileForm.php';
-            if ($this->loginInfo == "Доктор") {
+            if ($this->loginInfo == 2) {
                 $redirection = 'viewPacientData.php';
             }
             $response = ['user' => $this->user, 'userId' => $this->userId, 'redirectPage' => $redirection];
