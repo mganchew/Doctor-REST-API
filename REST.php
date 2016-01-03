@@ -31,6 +31,7 @@ switch ($scriptNameParts[2]){
         break;
     
     case "Registration":
+        $obj->setDataForRegistration($data);
         $response = $obj->Registration();
         break;
     

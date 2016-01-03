@@ -58,10 +58,6 @@ class RestModel {
             $this->setDataForAppointment($data);
         }
 
-        if (count($data) > 4 && isset($data['fName'])) {
-
-            $this->setDataForRegistration($data);
-        }
     }
 
     public function setDataForAppointment($data) {
@@ -88,7 +84,7 @@ class RestModel {
         $this->lName = $data['lName'];
         $this->password = $data['password'];
         if ($data['specId']) {
-            $this->specId = $data['specId'];
+            $this->specId = $data['specId'] *1;
         }
     }
 
@@ -279,7 +275,6 @@ class RestModel {
 
     public function Registration() {
 
-        $val = $this->regInfo;
 
         $statement = "INSERT INTO users(fName,lName,email,password) "
                 . "VALUES('" . $this->fName . "',"
@@ -295,7 +290,7 @@ class RestModel {
                     . "'" . $this->user . "',"
                     . "'" . $this->password . "')";
         }
-
+       
         $this->link->query($statement);
 
         $response = ['msg' => 'Регистрацията е успешна!Може да влезнете в системата.'];
