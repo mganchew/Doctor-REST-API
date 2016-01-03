@@ -15,10 +15,10 @@
             <input type="password" class="form-control" name ="password" placeholder="Password"><br>
             
             
-            <label for="password">Парола</label>
+            <label for="loginInfo">Вид Потребител</label>
             <select class="form-control" name="loginInfo">
                 <option value="2">Доктор</option>
-                <option value="1">Потребител</option>
+                <option value="1">Пациент</option>
             </select><br>
             
             
