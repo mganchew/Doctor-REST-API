@@ -325,7 +325,7 @@ class RestModel {
 
         if ($data['doctorFlag'] == "1") {
             $this->doctorFlag = 1;
-            $this->spec = $data['spec'] * 1;
+            $this->spec = $data['specId'] * 1;
             $this->workAddress = $data['workAddress'];
         }
     }

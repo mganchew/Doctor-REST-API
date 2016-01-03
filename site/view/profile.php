@@ -61,7 +61,9 @@ if (!isset($_GET['editable'])) {
                         <label for="spec">Направление</label>
                     </div>
                     <div>
-                        <input type="text" name="spec"<?= $editable ?>>
+                        <select class="form-control" name="specId" id="specName"<?= $editable ?>>
+                            <option selected disabled>Изберете направление от списъка</option>
+                        </select>
                     </div><br>
                     <div>
                         <label for="workAddress">Адрес на месторабота</label>
