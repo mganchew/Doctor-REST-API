@@ -9,6 +9,15 @@ function submitSearchForm(values) {
         dataType: 'json',
         success: function (data) {
             console.log(data);
+            var table = $("#doctorsFromSearch tbody");
+             $("#doctorsFromSearch").show();
+            $.each(data, function (idx, elem) {
+                table.append("<tr><td>" + elem.fName + "</td><td>" 
+                        + elem.lName + "</td>   <td>" + elem.email +
+                        "</td> <td>" + elem.workAddress + 
+                        "</td> <td><a href='profile.php?user="+elem.email+"&type=2 '>View Profile"+
+                        "</a></td></tr>");
+            });
 
             //window.location.replace(uri + data.redirectPage + "?msg=" + data.msg );
         },
@@ -20,7 +29,7 @@ function submitSearchForm(values) {
 }
 
 $(document).ready(function () {
-
+    $("#doctorsFromSearch").hide();
     $("#searchBtn").click(function (event) {
 
         event.preventDefault(); // cancel default behavior    

@@ -56,7 +56,7 @@ if (!isset($_GET['editable'])) {
                 <div>
                     <input type="text" id="email" name="email"<?= $editable ?>>
                 </div><br>
-                <?php if ($_SESSION['userInfo'] == 2) { ?>
+                <?php if ($_GET['type'] == 2) { ?>
                     <div>
                         <label for="spec">Направление</label>
                     </div>
