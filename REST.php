@@ -3,6 +3,7 @@ header('Access-Control-Allow-Origin: *');
 require 'vendor/autoload.php';
 require 'autoload.php';
 $scriptNameParts = explode('/', $_SERVER['REQUEST_URI']);
+
 $data = $_POST;
 
 $obj = new RestModel($data);
@@ -54,6 +55,16 @@ switch ($scriptNameParts[2]){
         $obj->loadUpdateInfo($data);
         $response = $obj->updateProfile();
         break;
+
+    case "setRating":
+        $obj->setDataForRating($data);
+        $response = $obj->setDoctorRating();
+        break;
+
+    case "getRating":   
+        $obj->getDataForRating($data);
+        $response = $obj->getDoctorRating();
+        break;
     
     case "search":
         $obj->loadSearchData($data);
@@ -62,7 +73,6 @@ switch ($scriptNameParts[2]){
     
     default:
         $response = json_encode("The request URL is missing");
-
 
 }
 

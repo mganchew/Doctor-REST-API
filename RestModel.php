@@ -24,10 +24,11 @@ class RestModel {
     protected $workAddress;
     protected $doctorFlag;
     protected $searchField;
+    protected $rating;
 
     public function __construct($data) {
 
-        $this->link = new PDO('mysql:host=localhost;dbname=test;charset=utf8', 'root', '');
+        $this->link = new PDO('mysql:host=localhost;dbname=mladenapi;charset=utf8', 'root', '');
 
         if ($data['user']) {
             $this->user = $data['user'];
@@ -58,6 +59,71 @@ class RestModel {
             $this->setDataForAppointment($data);
         }
 
+    }
+
+    public function setDataForRating($data) {
+        $this->rating = $data['rating'];
+        $this->userId = $data['userId'];
+        $this->doctor = $this->prepareDataForRating($data['email']);
+    }
+
+    public function prepareDataForRating($email) {
+        
+        $statement = "SELECT id FROM doctors where email = '" . $email . "'";
+
+        try {
+
+            $stmt = $this->link->query($statement);
+
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);        
+
+            return $result[0]['id'];
+            
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    public function getDataForRating($data) {
+
+        $this->email = $data['user'];
+    }
+
+    public function setDoctorRating() {
+
+         $statement = "INSERT INTO ratings(doctor_id,rating,user_id) 
+            VALUES('" . $this->doctor . "',"
+            . "'" . $this->rating . "',"
+            . "'" . $this->userId . "')";
+
+        try {
+            
+            $this->link->query($statement);
+            
+            $response = ['msg' => 'Успешно запазихте своя рейтинг.'];
+        
+        } catch (Exception $e) {
+            return json_encode($e);
+        }
+
+        return json_encode($response);
+    }
+
+    public function getDoctorRating() {
+        
+        $statement = "select d.id, d.email, round(avg(r.rating),1) as average from doctors as d right join ratings as r on d.id = r.doctor_id where d.email = '" . $this->email . "' group by d.id";  
+
+        try {
+
+            $stmt = $this->link->query($statement);
+
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);        
+
+            return json_encode($result);
+
+        } catch (Exception $e) {
+            return json_encode($e);
+        }
     }
 
     public function setDataForAppointment($data) {

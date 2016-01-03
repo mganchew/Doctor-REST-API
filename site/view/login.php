@@ -3,6 +3,7 @@
 require '../../autoload.php';
 require_once 'header.php';
 $data = $_POST;
+
 $request = new Curl("login", $data);
 $json = $request->getResponse();
 $response = json_decode($json, true);

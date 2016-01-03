@@ -1,3 +1,68 @@
+$.urlParam = function (name) {
+    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    return results[1] || 0;
+}
+dataToSend = {user: $.urlParam('user'), doctorFlag: $.urlParam('type')};
+
+
+// RATING
+
+$.ajax({
+    type: 'POST',
+    url: "http://appointment.dev/REST.php/getRating",
+    data: dataToSend,
+    dataType: 'json',
+    success: function (data) {
+        populateRating(data);
+    },
+    error: function (data) {
+        console.log('error');
+    }
+});
+
+function populateRating(data) {
+
+    $.each(data, function () {
+        $("#rating").append(this.average);
+    });    
+}
+
+function popupVote() {
+    
+    var voteValue = prompt('Please enter your rating from 1 to 5', 5);
+
+    if (voteValue != null && voteValue != "" && voteValue > 0 && voteValue < 6) {
+        
+        setRating(voteValue);
+
+    } else {
+        alert("Invalid vote!");
+        popupVote()    
+    }
+    
+}
+
+function setRating (voteValue) {
+    
+    userId = $('#userId').val();
+
+    $.ajax({
+        type: 'POST',
+        url: "http://appointment.dev/REST.php/setRating",
+        data: {email: dataToSend.user, rating: voteValue, userId: userId},
+        dataType: 'json',
+        success: function (data) {
+            
+            location.reload();
+        },
+        error: function (data) {
+            console.log('error');
+        }
+    });
+}
+
+
+// PROFILE
 
 function populateSpecs(data) {
 
@@ -17,7 +82,6 @@ $.ajax({
         populateSpecs(data);
     },
     error: function (data) {
-        console.log(data);
         console.log('error');
     }
 });
@@ -31,12 +95,6 @@ function populateProfile(frm, data) {
     });
 
 }
-
-$.urlParam = function (name) {
-    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-    return results[1] || 0;
-}
-dataToSend = {user: $.urlParam('user'), doctorFlag: $.urlParam('type')};
 
 $.ajax({
     type: 'POST',
@@ -90,6 +148,11 @@ function submitProfileForm(values) {
 
 $(document).ready(function () {
 
+
+    $("#vote").click(function (event) {
+
+        popupVote();
+    });
 
     $("#submitProfile").click(function (event) {
 

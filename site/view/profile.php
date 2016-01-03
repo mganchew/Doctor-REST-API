@@ -6,6 +6,7 @@ if (!isset($_GET['editable'])) {
 }
 ?>
 <script type="text/javascript" src="../js/profile.js"></script>
+
 <?php if ($_GET['msg']) { ?>
     <div class="container text-center">
         <h4 class="text-center ">
@@ -31,6 +32,15 @@ if (!isset($_GET['editable'])) {
             <div class="caption text-center" id="userInfo">
                 <h3>Кратко описание</h3>
                 <p></p>
+            </div>
+
+            <div class="caption text-center" id="userRating">
+                <h3>Рейтинг:</h3>
+                <p><strong><span id="rating"></span></strong></p>
+
+                <input type="hidden" id="userId" name="userId" value="<?php echo $_SESSION['userId']; ?>" />
+
+                <a href="#" id="vote" class="btn btn-primary">Гласувай</a>
             </div>
         </div>
 
