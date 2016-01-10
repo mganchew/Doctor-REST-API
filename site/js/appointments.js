@@ -2,9 +2,12 @@
 
 function getDoctorCalendar(doctorEmail){
     
-    var email = doctorEmail;
-    console.log(email);
-    
+    var email = doctorEmail.split('@');
+    console.log(email[0]);
+    src = "https://www.google.com/calendar/embed?src=" + email[0] + "%40gmail.com&ctz=Europe/Sofia";
+    $("#doctorCalendar").attr("src", src);
+    $("#doctorCalendar").show();
+
 }
 
 function getAllDoctors(specId) {
@@ -34,6 +37,7 @@ function populateDoctors (data) {
 
         options.append($("<option />").val(this.email).text(this.lName));
     });
+    $("#doctorName").change();
 }
 
 function submitAppointmentsForm(values) {
@@ -83,7 +87,7 @@ $.ajax({
 $( document ).ready(function() {
     
     
-    
+    $("#doctorCalendar").hide();
     $( "#specName" ).change(function() {
 
         var specId = $(this).val();

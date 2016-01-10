@@ -21,7 +21,6 @@
                 <option value="1">Пациент</option>
             </select><br>
             
-            
             <input type="hidden" name="url" value="login">
             
              <button type="submit" class="btn btn-primary"name = "submit">Към началната страница!</button>

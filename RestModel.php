@@ -28,7 +28,7 @@ class RestModel {
 
     public function __construct($data) {
 
-        $this->link = new PDO('mysql:host=localhost;dbname=mladenapi;charset=utf8', 'root', '');
+        $this->link = new PDO('mysql:host=localhost;dbname=test;charset=utf8', 'root', '');
 
         if ($data['user']) {
             $this->user = $data['user'];
@@ -346,7 +346,7 @@ class RestModel {
 
     public function getSpecsWithDoctors() {
 
-        $statement = "Select specs.id, specs.name FROM specs RIGHT JOIN doctors ON specs.id = doctors.specId";
+        $statement = "Select specs.id, specs.name FROM specs RIGHT JOIN doctors ON specs.id = doctors.specId group by specs.id";
 
         $stmt = $this->link->query($statement);
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);

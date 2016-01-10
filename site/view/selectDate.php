@@ -60,6 +60,10 @@ $rawData = json_decode($data, TRUE);
 </div>
 
 <div class="text-center">
+    <iframe id="doctorCalendar" src='' style = "border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+</div>
+
+<div class="text-center">
     
     <h3> Моля избере желаната от вас дата , час и доктор след което натиснете бутона "Запазване на час"</h3>
 

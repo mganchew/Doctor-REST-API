@@ -149,6 +149,10 @@ function submitProfileForm(values) {
 $(document).ready(function () {
 
 
+    if($.urlParam('type') == 1){
+        $("#userRating").hide();
+    }
+
     $("#vote").click(function (event) {
 
         popupVote();
