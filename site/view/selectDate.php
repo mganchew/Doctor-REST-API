@@ -3,12 +3,11 @@ require_once 'header.php';
 require '../../autoload.php';
 
 if (!isset($_GET['long'])) {
-    $_SESSION['specId'] = $_POST['specId'];    
+    $_SESSION['specId'] = $_POST['specId'];
 }
 
 // (?)
 $data = $_SESSION;
-
 ?>
 
 <script type="text/javascript" src="../js/appointments.js"></script>
@@ -27,7 +26,6 @@ $long = (isset($_GET['long'])) ? $_GET['long'] : '';
 $address = "https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$long&key=AIzaSyAIFri_MjyZdspmiztvm_CMBLs5nBcEnT8";
 $data = file_get_contents($address);
 $rawData = json_decode($data, TRUE);
-
 ?>
 
 <!-- // END // GET GEOLOCATION ADDRESS -->
@@ -38,20 +36,19 @@ $rawData = json_decode($data, TRUE);
 
 
 <div class="text-center">
-    
+
     <img <?php
-    
-    if (isset($_GET['long'])) {
-        echo "";
-    } else {
-        echo "onload=\"getLocation()\"";
-    }
-    ?> src="1.jpg" class = "img-circle">
+if (isset($_GET['long'])) {
+    echo "";
+} else {
+    echo "onload=\"getLocation()\"";
+}
+?> src="1.jpg" class = "img-circle">
 
     <h3> Моля избере желаното от вас направление:</h3>
 
     <div class="container text-center" align="left">
-        
+
         <select class="form-control" name="specId" id="specName">
             <option selected disabled>Изберете направление от списъка</option>
         </select>
@@ -60,11 +57,7 @@ $rawData = json_decode($data, TRUE);
 </div>
 
 <div class="text-center">
-    <iframe id="doctorCalendar" src='' style = "border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
-</div>
 
-<div class="text-center">
-    
     <h3> Моля избере желаната от вас дата , час и доктор след което натиснете бутона "Запазване на час"</h3>
 
 </div>
@@ -88,11 +81,11 @@ $hours = array('08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '1
                     <div class="form-group">
                         <label for="sel1">Месец</label>
                         <select class="form-control" name="month">
-                            <?php
-                            foreach ($months as $value) {
-                                echo '<option value ="' . $value . '">' . $value . '</option>';
-                            }
-                            ?>
+<?php
+foreach ($months as $value) {
+    echo '<option value ="' . $value . '">' . $value . '</option>';
+}
+?>
                         </select>
                     </div>
                 </div>
@@ -101,11 +94,11 @@ $hours = array('08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '1
                     <div class="form-group">
                         <label for="sel1">Ден</label>
                         <select class="form-control" name="day">
-                            <?php
-                            foreach ($days as $value) {
-                                echo '<option value ="' . $value . '">' . $value . '</option>';
-                            }
-                            ?>
+<?php
+foreach ($days as $value) {
+    echo '<option value ="' . $value . '">' . $value . '</option>';
+}
+?>
                         </select>
                     </div>
                 </div>
@@ -114,11 +107,11 @@ $hours = array('08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '1
                     <div class="form-group">
                         <label for="sel1">Година</label>
                         <select class="form-control" name="year">
-                            <?php
-                            foreach ($years as $value) {
-                                echo '<option value ="' . $value . '">' . $value . '</option>';
-                            }
-                            ?>
+<?php
+foreach ($years as $value) {
+    echo '<option value ="' . $value . '">' . $value . '</option>';
+}
+?>
                         </select>
                     </div>
                 </div>
@@ -127,22 +120,22 @@ $hours = array('08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '1
                     <div class="form-group">
                         <label for="sel1">Час</label>
                         <select class="form-control" name="hour">
-                            <?php
-                            foreach ($hours as $value) {
-                                echo '<option value ="' . $value . '">' . $value . '</option>';
-                            }
-                            ?>
+<?php
+foreach ($hours as $value) {
+    echo '<option value ="' . $value . '">' . $value . '</option>';
+}
+?>
                         </select>
                     </div>
                 </div>
 
                 <div class = "col-md-2">
                     <div class="form-group">
-                        
+
                         <label for="sel1">Доктор</label>
-                        
+
                         <select class="form-control" name="doctor" id="doctorName" disabled>
-                            
+
                             <option selected disabled>Моля, изберете първо направление</option>
 
                         </select>
@@ -151,15 +144,20 @@ $hours = array('08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '1
 
             </div>
         </div>
-        
+
         <div>
             <input type="hidden" name="address" value="<?= $rawData['results'][2]['formatted_address'] ?>">
-            <input type="hidden" name="userId" value="<?=$_SESSION['userId']?>">
-            <input type="hidden" name="file" value="<?=$_SESSION['file']?>">
-            
-            <div class = "text-center">
-                <button type="submit" id="saveBtn" class="btn btn-lg btn-default"> <i class="fa fa-google-plus"></i>Запазване на час!</button>  
-            </div>
+            <input type="hidden" name="userId" value="<?= $_SESSION['userId'] ?>">
+            <input type="hidden" name="file" value="<?= $_SESSION['file'] ?>">
+        </div>
+        
+        <div class="text-center">
+            <iframe id="doctorCalendar" src='' style = "border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+        </div>
+
+        <div class = "text-center">
+            <button type="submit" id="saveBtn" class="btn btn-lg btn-default"> <i class="fa fa-google-plus"></i>Запазване на час!</button>  
+        </div>
     </form>
 
 </div>
