@@ -47,7 +47,7 @@ class RestModel {
         }
 
         if ($data['loginInfo']) {
-            $this->loginInfo = $data['loginInfo'];
+            $this->loginInfo = $data['loginInfo']*1;
         }
 
         if ($data['userId']) {
@@ -58,7 +58,6 @@ class RestModel {
 
             $this->setDataForAppointment($data);
         }
-
     }
 
     public function setDataForRating($data) {
@@ -68,17 +67,16 @@ class RestModel {
     }
 
     public function prepareDataForRating($email) {
-        
+
         $statement = "SELECT id FROM doctors where email = '" . $email . "'";
 
         try {
 
             $stmt = $this->link->query($statement);
 
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);        
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             return $result[0]['id'];
-            
         } catch (Exception $e) {
             return false;
         }
@@ -91,17 +89,16 @@ class RestModel {
 
     public function setDoctorRating() {
 
-         $statement = "INSERT INTO ratings(doctor_id,rating,user_id) 
+        $statement = "INSERT INTO ratings(doctor_id,rating,user_id) 
             VALUES('" . $this->doctor . "',"
-            . "'" . $this->rating . "',"
-            . "'" . $this->userId . "')";
+                . "'" . $this->rating . "',"
+                . "'" . $this->userId . "')";
 
         try {
-            
+
             $this->link->query($statement);
-            
+
             $response = ['msg' => 'Успешно запазихте своя рейтинг.'];
-        
         } catch (Exception $e) {
             return json_encode($e);
         }
@@ -110,17 +107,16 @@ class RestModel {
     }
 
     public function getDoctorRating() {
-        
-        $statement = "select d.id, d.email, round(avg(r.rating),1) as average from doctors as d right join ratings as r on d.id = r.doctor_id where d.email = '" . $this->email . "' group by d.id";  
+
+        $statement = "select d.id, d.email, round(avg(r.rating),1) as average from doctors as d right join ratings as r on d.id = r.doctor_id where d.email = '" . $this->email . "' group by d.id";
 
         try {
 
             $stmt = $this->link->query($statement);
 
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);        
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             return json_encode($result);
-
         } catch (Exception $e) {
             return json_encode($e);
         }
@@ -150,7 +146,7 @@ class RestModel {
         $this->lName = $data['lName'];
         $this->password = $data['password'];
         if ($data['specId']) {
-            $this->specId = $data['specId'] *1;
+            $this->specId = $data['specId'] * 1;
         }
     }
 
@@ -258,24 +254,22 @@ class RestModel {
             echo $e;
         }
     }
-    
-    public function setDataForAppointmentCheck($data){
-        
+
+    public function setDataForAppointmentCheck($data) {
+
         $this->user = $data['user'];
-        $this->doctorFlag = $data['userInfo'] *1 ;
-        
+        $this->doctorFlag = $data['userInfo'] * 1;
     }
 
     public function checkAppointment() {
 
         $statement = "Select * FROM appointments WHERE userId = '$this->userId'";
-        
-        if($this->doctorFlag == 2){
+
+        if ($this->doctorFlag == 2) {
             //TODO JOIN!!!
             $statement = "Select * FROM appointments WHERE doctor = '$this->user'";
-            
         }
-        
+
         $stmt = $this->link->query($statement);
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -300,30 +294,43 @@ class RestModel {
         $stmt = $this->link->query($statement);
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+        $redirection = 'no redirection';
+        $status = 'notOk';
+
         if ($result) {
             $this->userId = $result[0]['id'];
             $redirection = 'uploadFileForm.php';
+            $userInfo = 1;
             if ($this->loginInfo == 2) {
+                $userInfo = 2;
                 $redirection = 'viewPacientData.php';
             }
-            $response = ['user' => $this->user, 'userId' => $this->userId, 'redirectPage' => $redirection];
-            return json_encode($response);
+            $status = 'Ok';
         }
+
+        $response = [
+            'user' => $this->user,
+            'userId' => $this->userId,
+            'userInfo' =>$userInfo,
+            'redirectPage' => $redirection,
+            'status' => $status
+        ];
+        return json_encode($response);
     }
-    
-    public function setDataForProfile($data){
+
+    public function setDataForProfile($data) {
         $this->user = $data['user'];
         $this->doctorFlag = $data['doctorFlag'] * 1;
     }
 
     public function loadProfileInfo() {
-        
+
         $table = 'users';
-        if($this->doctorFlag == 2){
+        if ($this->doctorFlag == 2) {
             $table = 'doctors';
         }
-       $statement = "Select * FROM $table WHERE email = '$this->user'";
-        
+        $statement = "Select * FROM $table WHERE email = '$this->user'";
+
 
         $stmt = $this->link->query($statement);
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -370,7 +377,7 @@ class RestModel {
                     . "'" . $this->user . "',"
                     . "'" . $this->password . "')";
         }
-       
+
         $this->link->query($statement);
 
         $response = ['msg' => 'Регистрацията е успешна!Може да влезнете в системата.'];
@@ -408,7 +415,7 @@ class RestModel {
 
     public function updateProfile() {
 
-        
+
         $statement = "UPDATE users SET fName='" . $this->fName . "',"
                 . " lName='" . $this->lName . "',userInfo = '" . $this->userInfo . "'"
                 . " WHERE email='" . $this->user . "'";
@@ -453,20 +460,18 @@ class RestModel {
 
         echo "good";
     }
-    
-    public function loadSearchData($data){
-        
+
+    public function loadSearchData($data) {
+
         $this->searchField = $data['searchField'];
-        
     }
-    
-    public function search(){
+
+    public function search() {
         //TODO JOIN
         $statement = "Select * FROM doctors WHERE lName = '" . $this->searchField . "'";
         $stmt = $this->link->query($statement);
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return json_encode($result);
-        
     }
 
 }
