@@ -86,9 +86,35 @@ class RestModel {
 
         $this->email = $data['user'];
     }
+    
+    public function checkUserRatedDoctor(){
+        
+        $statement = "SELECT * FROM ratings WHERE userId = '$this->userId'";
+        $stmt = $this->link->query($statement);
+
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($result as $rating){
+            
+            if($rating['userId'] == $this->userId && $rating['doctorId'] == $this->doctor){
+                
+                return false;
+                
+            }
+            
+        }
+        
+        return true;
+        
+    }
 
     public function setDoctorRating() {
-
+        
+//        $check = $this->checkUserRatedDoctor();
+//        if($check == false){
+//            
+//            $response = ['msg' => 'Не може да гласувате два пъти за един и същи доктор.'];
+//            return json_encode($response);
+//        }
         $statement = "INSERT INTO ratings(doctor_id,rating,user_id) 
             VALUES('" . $this->doctor . "',"
                 . "'" . $this->rating . "',"
@@ -267,7 +293,8 @@ class RestModel {
 
         if ($this->doctorFlag == 2) {
             //TODO JOIN!!!
-            $statement = "Select * FROM appointments WHERE doctor = '$this->user'";
+            $statement = "Select * FROM appointments RIGHT JOIN users ON users.id = appointments.userId WHERE doctor = '$this->user'";
+            //$statement = "Select * FROM appointments WHERE doctor = '$this->user'";
         }
 
         $stmt = $this->link->query($statement);

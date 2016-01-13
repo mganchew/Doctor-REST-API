@@ -39,22 +39,24 @@ $response = json_decode($json, true);
 <br>
 <div class="container">
     <?php
+    //TODO ask to convert in js script?!?!?!?!
     foreach ($response as $appointment) {
         $date = $appointment['time'];
-
         $doctor = $appointment['doctor'];
-        $user = $appointment['userId'];
+        $user = $appointment['email'];
+        $fName = $appointment['fName'];
+        $lName = $appointment['lName'];
         $now = time();
         $HRNow = date('d/m/y-h:i');
 
         if (strcmp($date, $HRNow) > 0) {
             if ($_SESSION['userInfo'] == 2) {
                 ?>
-                <p><i><font color="green"> На <?= $date ?> часа имате запазен час с пациент <?= $user ?></font></i></p>
+    <p><i><font color="green"> На <?= $date ?> часа имате запазен час с пациент <a href="profile.php?user=<?=$user?>&type=1"><?= $fName?> <?= $lName ?></a></font></i></p>
                 <?php
             } else {
                 ?>
-                <p><i><font color="green"> На <?= $date ?> часа имате запазен час при доктор <?= $doctor ?></font></i></p>
+                <p><i><font color="green"> На <?= $date ?> часа имате запазен час при доктор <a href="profile.php?user=<?=$doctor?>&type=2"><?= $doctor?></a></font></i></p>
                 <?php
             }
         }

@@ -56,7 +56,7 @@ function setRating (voteValue) {
             location.reload();
         },
         error: function (data) {
-            console.log('error');
+            console.log(data);
         }
     });
 }
