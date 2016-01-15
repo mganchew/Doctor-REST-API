@@ -91,7 +91,7 @@ if (!isset($_GET['editable'])) {
                         <label for="shortDescription">Кратко описание</label>
                     </div>
                     <div class="text-center">
-                        <textarea class="form-control text-center" style="width: 362px; height: 165px;"id="userInfo" name="userInfo"<?= $editable ?>></textarea>
+                        <textarea class="form-control text-center" style="width: 265px; height: 153px;" id="userInfo" name="userInfo"<?= $editable ?>></textarea>
                     </div><br>
 
                     <div>
