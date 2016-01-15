@@ -49,7 +49,7 @@ if (isset($_GET['long'])) {
 
     <div class="container text-center" align="left">
 
-        <select class="form-control" name="specId" id="specName">
+        <select class="form-control text-center" name="specId" id="specName">
             <option selected disabled>Изберете направление от списъка</option>
         </select>
     </div>
