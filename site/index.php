@@ -15,7 +15,6 @@ $redirect_uri = 'http://appointment.dev/site';
 
 //This template is nothing but some HTML. You can find it on github Google API example. 
 //include_once "templates/base.php";
-
 //Start your session.
 session_start();
 
@@ -30,19 +29,19 @@ $client->setRedirectUri($redirect_uri);
 $client->addScope(Google_Service_Fitness::FITNESS_BODY_WRITE);
 $service = new Google_Service_Fitness($client);
 
-/************************************************
-If we're logging out we just need to clear our
-local access token in this case
- ************************************************/
+/* * **********************************************
+  If we're logging out we just need to clear our
+  local access token in this case
+ * ********************************************** */
 if (isset($_REQUEST['logout'])) {
     unset($_SESSION['access_token']);
 }
-/************************************************
-If we have a code back from the OAuth 2.0 flow,
-we need to exchange that with the authenticate()
-function. We store the resultant access token
-bundle in the session, and redirect to ourself.
- ************************************************/
+/* * **********************************************
+  If we have a code back from the OAuth 2.0 flow,
+  we need to exchange that with the authenticate()
+  function. We store the resultant access token
+  bundle in the session, and redirect to ourself.
+ * ********************************************** */
 if (isset($_GET['code'])) {
     $client->authenticate($_GET['code']);
     $_SESSION['access_token'] = $client->getAccessToken();
@@ -51,63 +50,70 @@ if (isset($_GET['code'])) {
     echo "EXCHANGE";
 }
 
-/************************************************
-If we have an access token, we can make
-requests, else we generate an authentication URL.
- ************************************************/
+/* * **********************************************
+  If we have an access token, we can make
+  requests, else we generate an authentication URL.
+ * ********************************************** */
 if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
     $client->setAccessToken($_SESSION['access_token']);
     echo "GOT IT";
     echo "<pre>";
 
     // Same code as yours
-    
+    $token = json_decode($_SESSION['access_token'],true)['access_token'];
+    //var_dump($token);
+    ?>
+
+<input type="hidden" id="accessToken" value="<?=$token?>">
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="js/googleAPI.js"></script>
+
+    <?php
     $dataSources = $service->users_dataSources;
     $dataSets = $service->users_dataSources_datasets;
-
     $listDataSources = $dataSources->listUsersDataSources("me");
-    $timezone = "GMT+0100";
-    $today = date("Y-m-d");
-    $endTime = strtotime($today.' 00:00:00 '.$timezone);
-    $startTime = strtotime('-1 day', $endTime);
-    var_dump($listDataSources);
-    while($listDataSources->valid()) {
-        
-        $dataSourceItem = $listDataSources->next();
-        if ($dataSourceItem['dataType']['name'] == "com.google.step_count.delta") {
-            $dataStreamId = $dataSourceItem['dataStreamId'];
-            $listDatasets = $dataSets->get("me", $dataStreamId, $startTime.'000000000'.'-'.$endTime.'000000000');
-
-            $step_count = 0;
-            while($listDatasets->valid()) {
-                $dataSet = $listDatasets->next();
-                $dataSetValues = $dataSet['value'];
-
-                if ($dataSetValues && is_array($dataSetValues)) {
-                    foreach($dataSetValues as $dataSetValue) {
-                        $step_count += $dataSetValue['intVal'];
-                    }
-                }
-            }
-            
-            echo("STEP: ".$step_count."<br />");
-        };
-    }
-    echo "</pre>";
+//    $timezone = "GMT+0100";
+//    $today = date("Y-m-d");
+//    $endTime = strtotime($today.' 00:00:00 '.$timezone);
+//    $startTime = strtotime('-1 day', $endTime);
+//    var_dump($listDataSources);
+//    while($listDataSources->valid()) {
+//        
+//        $dataSourceItem = $listDataSources->next();
+//        if ($dataSourceItem['dataType']['name'] == "com.google.step_count.delta") {
+//            $dataStreamId = $dataSourceItem['dataStreamId'];
+//            $listDatasets = $dataSets->get("me", $dataStreamId, $startTime.'000000000'.'-'.$endTime.'000000000');
+//
+//            $step_count = 0;
+//            while($listDatasets->valid()) {
+//                $dataSet = $listDatasets->next();
+//                $dataSetValues = $dataSet['value'];
+//
+//                if ($dataSetValues && is_array($dataSetValues)) {
+//                    foreach($dataSetValues as $dataSetValue) {
+//                        $step_count += $dataSetValue['intVal'];
+//                    }
+//                }
+//            }
+//            
+//            echo("STEP: ".$step_count."<br />");
+//        };
+//    }
+//    echo "</pre>";
 } else {
     $authUrl = $client->createAuthUrl();
 }
 
-/************************************************
-If we're signed in and have a request to shorten
-a URL, then we create a new URL object, set the
-unshortened URL, and call the 'insert' method on
-the 'url' resource. Note that we re-store the
-access_token bundle, just in case anything
-changed during the request - the main thing that
-might happen here is the access token itself is
-refreshed if the application has offline access.
- ************************************************/
+/* * **********************************************
+  If we're signed in and have a request to shorten
+  a URL, then we create a new URL object, set the
+  unshortened URL, and call the 'insert' method on
+  the 'url' resource. Note that we re-store the
+  access_token bundle, just in case anything
+  changed during the request - the main thing that
+  might happen here is the access token itself is
+  refreshed if the application has offline access.
+ * ********************************************** */
 if ($client->getAccessToken() && isset($_GET['url'])) {
     $_SESSION['access_token'] = $client->getAccessToken();
 }

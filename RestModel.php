@@ -292,9 +292,7 @@ class RestModel {
         $statement = "Select * FROM appointments WHERE userId = '$this->userId'";
 
         if ($this->doctorFlag == 2) {
-            //TODO JOIN!!!
-            $statement = "Select * FROM appointments RIGHT JOIN users ON users.id = appointments.userId WHERE doctor = '$this->user'";
-            //$statement = "Select * FROM appointments WHERE doctor = '$this->user'";
+            $statement = "Select doctor,time,lName,fName,email FROM appointments RIGHT JOIN users ON users.id = appointments.userId WHERE doctor = '$this->user'";
         }
 
         $stmt = $this->link->query($statement);
@@ -494,8 +492,7 @@ class RestModel {
     }
 
     public function search() {
-        //TODO JOIN
-        $statement = "Select * FROM doctors WHERE lName = '" . $this->searchField . "'";
+        $statement = "Select lName,fName,workAddress,email,name FROM doctors RIGHT JOIN specs ON specs.id = doctors.specId WHERE lName = '" . $this->searchField . "'";
         $stmt = $this->link->query($statement);
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return json_encode($result);
