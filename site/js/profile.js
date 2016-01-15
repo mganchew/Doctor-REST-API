@@ -149,11 +149,20 @@ function submitProfileForm(values) {
 
 }
 
+function getGoogleFitData(){
+    
+    console.log('make it work');
+    
+}
+
 $(document).ready(function () {
     
     getRatings();
     getSpecs();
     loadProfileInfo();
+    
+    //TODO add data from google fit
+    //getGoogleFitData();
 
     if ($.urlParam('type') == 1) {
         $("#userRating").hide();

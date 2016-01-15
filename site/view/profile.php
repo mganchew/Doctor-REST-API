@@ -46,7 +46,7 @@ if (!isset($_GET['editable'])) {
 
         <div class="col-md-1 text-center" ></div>
 
-        <div class="col-md-4 text-center" >
+        <div class="col-md-3 text-center" >
             <form method="POST" name="profileEdit" id="profileEdit">
                 <div>
                     <label for="firstName">Име</label>
@@ -82,7 +82,7 @@ if (!isset($_GET['editable'])) {
                     <div>
                         <input type="text" class="form-control text-center" name="workAddress"<?= $editable ?>>
                     </div><br>
-                    <input type="hidden" id="currentUserInfo" value="<?=$_SESSION['userInfo']?>">
+                    <input type="hidden" id="currentUserInfo" value="<?= $_SESSION['userInfo'] ?>">
                 <?php } ?>
                 <?php
                 if ($editable == '') {
@@ -106,8 +106,20 @@ if (!isset($_GET['editable'])) {
             </form>
         </div>
 
-        <div class="col-md-3 text-center" >
-            <h3>INFO FROM FITBIT!!!!</h3>
+        <div class="col-md-1 text-center" ></div>
+        
+        <div class="col-md-4 text-center" >
+            <label for="googleFitData">Показатели</label>
+            <table class="table table-bordered text-center" name="googleFitData" id="googleFitData">
+                <thead>
+                    <tr>
+                        <th width="200" class="text-center">Пулс</th>
+                        <th width="200" class="text-center">Кислородно насищане</th>
+
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
         </div>
 
     </div>
