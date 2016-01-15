@@ -62,29 +62,33 @@ function setRating(voteValue) {
     });
 }
 
-function getUserRatingInfoForDoctor(){
-    
+function getUserRatingInfoForDoctor(currentUserInfo) {
+
     userId = $('#userId').val();
-    
+
     $.ajax({
         type: 'POST',
         url: "http://appointment.dev/REST.php/getUserRatingInfoForDoctor",
-        data: {email: dataToSend.user,userId: userId},
+        data: {email: dataToSend.user, userId: userId},
         dataType: 'json',
         success: function (data) {
-            if(data.length !== 0){
+            if (data.length !== 0) {
                 $("#vote").hide();
-                $("#userRating").append("<p>Вече сте гласували за този доктор.</p>");
+                console.log(currentUserInfo);
+                if (currentUserInfo === "2") {
+                    $("#userRating").append("<p>Докторите не могат да гласуват за себе си или други доктори.</p>");
+                } else {
+                    $("#userRating").append("<p>Вече сте гласували за този доктор.</p>");
+                }
             }
-            //console.log(data);
-            //location.reload();
+            
         },
         error: function (data) {
             //console.log(data);
             console.log('error');
         }
     });
-    
+
 }
 
 
@@ -174,18 +178,18 @@ function submitProfileForm(values) {
 
 }
 
-function getGoogleFitData(){
-    
+function getGoogleFitData() {
+
     console.log('make it work');
-    
+
 }
 
 $(document).ready(function () {
-    getUserRatingInfoForDoctor();
+
     getRatings();
     getSpecs();
     loadProfileInfo();
-    
+
     //TODO add data from google fit
     //getGoogleFitData();
 
@@ -193,12 +197,9 @@ $(document).ready(function () {
         $("#userRating").hide();
     }
 
-    currentUser = $("#currentUserInfo").val();
-
-    if (currentUser == 2) {
-        $("#userRating").hide();
-    }
-
+    currentUserInfo = $("#currentUserInfo").val();
+    getUserRatingInfoForDoctor(currentUserInfo);
+    
     $("#vote").click(function (event) {
 
         popupVote();
