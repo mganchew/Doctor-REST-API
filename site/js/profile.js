@@ -6,44 +6,45 @@ dataToSend = {user: $.urlParam('user'), doctorFlag: $.urlParam('type')};
 
 
 // RATING
-
-$.ajax({
-    type: 'POST',
-    url: "http://appointment.dev/REST.php/getRating",
-    data: dataToSend,
-    dataType: 'json',
-    success: function (data) {
-        populateRating(data);
-    },
-    error: function (data) {
-        console.log('error');
-    }
-});
+function getRatings() {
+    $.ajax({
+        type: 'POST',
+        url: "http://appointment.dev/REST.php/getRating",
+        data: dataToSend,
+        dataType: 'json',
+        success: function (data) {
+            populateRating(data);
+        },
+        error: function (data) {
+            console.log('error');
+        }
+    });
+}
 
 function populateRating(data) {
 
     $.each(data, function () {
         $("#rating").append(this.average);
-    });    
+    });
 }
 
 function popupVote() {
-    
+
     var voteValue = prompt('Please enter your rating from 1 to 5', 5);
 
     if (voteValue != null && voteValue != "" && voteValue > 0 && voteValue < 6) {
-        
+
         setRating(voteValue);
 
     } else {
         alert("Invalid vote!");
-        popupVote()    
+        popupVote()
     }
-    
+
 }
 
-function setRating (voteValue) {
-    
+function setRating(voteValue) {
+
     userId = $('#userId').val();
 
     $.ajax({
@@ -52,7 +53,7 @@ function setRating (voteValue) {
         data: {email: dataToSend.user, rating: voteValue, userId: userId},
         dataType: 'json',
         success: function (data) {
-            
+
             location.reload();
         },
         error: function (data) {
@@ -73,18 +74,19 @@ function populateSpecs(data) {
         options.append($("<option />").val(this.id).text(this.name));
     });
 }
-
-$.ajax({
-    type: 'GET',
-    url: "http://appointment.dev/REST.php/specs",
-    dataType: 'json',
-    success: function (data) {
-        populateSpecs(data);
-    },
-    error: function (data) {
-        console.log('error');
-    }
-});
+function getSpecs() {
+    $.ajax({
+        type: 'GET',
+        url: "http://appointment.dev/REST.php/specs",
+        dataType: 'json',
+        success: function (data) {
+            populateSpecs(data);
+        },
+        error: function (data) {
+            console.log('error');
+        }
+    });
+}
 
 function populateProfile(frm, data) {
     $.each(data.data, function (key, value) {
@@ -95,20 +97,21 @@ function populateProfile(frm, data) {
     });
 
 }
+function loadProfileInfo() {
+    $.ajax({
+        type: 'POST',
+        url: "http://appointment.dev/REST.php/loadProfileInfo",
+        data: dataToSend,
+        dataType: 'json',
+        success: function (data) {
 
-$.ajax({
-    type: 'POST',
-    url: "http://appointment.dev/REST.php/loadProfileInfo",
-    data: dataToSend,
-    dataType: 'json',
-    success: function (data) {
-
-        populateProfile('#profileEdit', data);
-    },
-    error: function () {
-        console.log('error');
-    }
-});
+            populateProfile('#profileEdit', data);
+        },
+        error: function () {
+            console.log('error');
+        }
+    });
+}
 
 function submitProfileForm(values) {
 
@@ -147,15 +150,18 @@ function submitProfileForm(values) {
 }
 
 $(document).ready(function () {
+    
+    getRatings();
+    getSpecs();
+    loadProfileInfo();
 
-
-    if($.urlParam('type') == 1){
+    if ($.urlParam('type') == 1) {
         $("#userRating").hide();
     }
-    
+
     currentUser = $("#currentUserInfo").val();
-    
-    if(currentUser == 2){
+
+    if (currentUser == 2) {
         $("#userRating").hide();
     }
 
