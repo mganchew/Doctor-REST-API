@@ -62,6 +62,31 @@ function setRating(voteValue) {
     });
 }
 
+function getUserRatingInfoForDoctor(){
+    
+    userId = $('#userId').val();
+    
+    $.ajax({
+        type: 'POST',
+        url: "http://appointment.dev/REST.php/getUserRatingInfoForDoctor",
+        data: {email: dataToSend.user,userId: userId},
+        dataType: 'json',
+        success: function (data) {
+            if(data.length !== 0){
+                $("#vote").hide();
+                $("#userRating").append("<p>Вече сте гласували за този доктор.</p>");
+            }
+            //console.log(data);
+            //location.reload();
+        },
+        error: function (data) {
+            //console.log(data);
+            console.log('error');
+        }
+    });
+    
+}
+
 
 // PROFILE
 
@@ -156,7 +181,7 @@ function getGoogleFitData(){
 }
 
 $(document).ready(function () {
-    
+    getUserRatingInfoForDoctor();
     getRatings();
     getSpecs();
     loadProfileInfo();

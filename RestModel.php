@@ -497,5 +497,20 @@ class RestModel {
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return json_encode($result);
     }
+    
+    public function setUserDataForRating($data){
+        
+        $this->userId = $data['userId'];
+        $this->doctor = $this->prepareDataForRating($data['email']);
+    }
+    
+    public function getUserRatingInfoForDoctor(){
+        
+        $statement = "SELECT * FROM ratings WHERE user_id = $this->userId AND doctor_id = $this->doctor";
+        $stmt = $this->link->query($statement);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return json_encode($result);
+        
+    }
 
 }

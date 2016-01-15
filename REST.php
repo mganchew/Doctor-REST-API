@@ -70,6 +70,11 @@ switch ($scriptNameParts[2]){
         $obj->loadSearchData($data);
         $response = $obj->search();
         break;
+        
+    case "getUserRatingInfoForDoctor":
+        $obj->setUserDataForRating($data);
+        $response = $obj->getUserRatingInfoForDoctor();
+        break;
     
     default:
         $response = json_encode("The request URL is missing");
