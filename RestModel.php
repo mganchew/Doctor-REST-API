@@ -86,35 +86,9 @@ class RestModel {
 
         $this->email = $data['user'];
     }
-    
-    public function checkUserRatedDoctor(){
-        
-        $statement = "SELECT * FROM ratings WHERE userId = '$this->userId'";
-        $stmt = $this->link->query($statement);
-
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        foreach ($result as $rating){
-            
-            if($rating['userId'] == $this->userId && $rating['doctorId'] == $this->doctor){
-                
-                return false;
-                
-            }
-            
-        }
-        
-        return true;
-        
-    }
 
     public function setDoctorRating() {
         
-//        $check = $this->checkUserRatedDoctor();
-//        if($check == false){
-//            
-//            $response = ['msg' => 'Не може да гласувате два пъти за един и същи доктор.'];
-//            return json_encode($response);
-//        }
         $statement = "INSERT INTO ratings(doctor_id,rating,user_id) 
             VALUES('" . $this->doctor . "',"
                 . "'" . $this->rating . "',"
