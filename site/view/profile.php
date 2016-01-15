@@ -44,34 +44,35 @@ if (!isset($_GET['editable'])) {
             </div>
         </div>
 
+        <div class="col-md-1 text-center" ></div>
 
-        <div class="col-md-6 text-center" >
+        <div class="col-md-4 text-center" >
             <form method="POST" name="profileEdit" id="profileEdit">
                 <div>
                     <label for="firstName">Име</label>
                 </div>
                 <div>
-                    <input type="text" id="fName" name="fName"<?= $editable ?>>
+                    <input type="text" class="form-control text-center" id="fName" name="fName"<?= $editable ?>>
                 </div><br>
 
                 <div>
                     <label for="lastName">Фамилия</label>
                 </div>
                 <div>
-                    <input type="text" id="lName" name="lName"<?= $editable ?>>
+                    <input type="text" class="form-control text-center" id="lName" name="lName"<?= $editable ?>>
                 </div><br>
                 <div>
                     <label for="email">Имейл</label>
                 </div>
                 <div>
-                    <input type="text" id="email" name="email"<?= $editable ?>>
+                    <input type="text" class="form-control text-center" id="email" name="email"<?= $editable ?>>
                 </div><br>
                 <?php if ($_GET['type'] == 2) { ?>
                     <div>
                         <label for="spec">Направление</label>
                     </div>
                     <div>
-                        <select class="form-control" name="specId" id="specName"<?= $editable ?>>
+                        <select class="form-control text-center" name="specId" id="specName"<?= $editable ?>>
                             <option selected disabled>Изберете направление от списъка</option>
                         </select>
                     </div><br>
@@ -79,7 +80,7 @@ if (!isset($_GET['editable'])) {
                         <label for="workAddress">Адрес на месторабота</label>
                     </div>
                     <div>
-                        <input type="text" name="workAddress"<?= $editable ?>>
+                        <input type="text" class="form-control text-center" name="workAddress"<?= $editable ?>>
                     </div><br>
                     <input type="hidden" id="currentUserInfo" value="<?=$_SESSION['userInfo']?>">
                 <?php } ?>
@@ -89,8 +90,8 @@ if (!isset($_GET['editable'])) {
                     <div>
                         <label for="shortDescription">Кратко описание</label>
                     </div>
-                    <div>
-                        <textarea style="width: 286px; height: 162px;"id="userInfo" name="userInfo"<?= $editable ?>></textarea>
+                    <div class="text-center">
+                        <textarea class="form-control text-center" style="width: 362px; height: 165px;"id="userInfo" name="userInfo"<?= $editable ?>></textarea>
                     </div><br>
 
                     <div>
