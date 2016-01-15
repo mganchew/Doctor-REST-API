@@ -81,6 +81,7 @@ if (!isset($_GET['editable'])) {
                     <div>
                         <input type="text" name="workAddress"<?= $editable ?>>
                     </div><br>
+                    <input type="hidden" id="currentUserInfo" value="<?=$_SESSION['userInfo']?>">
                 <?php } ?>
                 <?php
                 if ($editable == '') {
