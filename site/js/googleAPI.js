@@ -8,7 +8,7 @@ function createDataSource(data) {
     token = $("#accessToken").val();
     //console.log(token);
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         url: "https://www.googleapis.com/fitness/v1/users/me/dataSources",
         data: data,
         headers: {
