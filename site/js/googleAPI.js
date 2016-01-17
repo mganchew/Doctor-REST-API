@@ -5,16 +5,41 @@
  */
 
 function createDataSource(data) {
+    var body = {
+      "dataStreamName": "MyDataSource2",
+      "type": "derived",
+      "application": {
+        "detailsUrl": "http://http://appointment.dev",
+        "name": "Foo Example App 2",
+        "version": "2"
+      },
+      "dataType": {
+        "field": [
+          {
+            "name": "steps",
+            "format": "integer"
+          }
+        ],
+        "name": "com.google.step_count.delta"
+      },
+      "device": {
+        "manufacturer": "Example Manufacturer",
+        "model": "ExampleTablet",
+        "type": "tablet",
+        "uid": "1000002",
+        "version": "1.0"
+      }
+    };
+
     token = $("#accessToken").val();
-    //console.log(token);
+
     $.ajax({
         type: 'POST',
         url: "https://www.googleapis.com/fitness/v1/users/me/dataSources",
-        data: data,
+        data: JSON.stringify(body),
         headers: {
-            "Content-Type": "application/json",
-
-            "Authorization": "Bearer " + token
+            "Authorization" : "Bearer " + token,
+            "Content-Type": "application/json;encoding=utf-8"
         },
         dataType: 'json',
         success: function (data) {
@@ -27,34 +52,36 @@ function createDataSource(data) {
 
 }
 
+function getUserDataSource(data) {
+    token = $("#accessToken").val();
+    //console.log(token);
+    $.ajax({
+        type: 'GET',
+        url: "https://www.googleapis.com/fitness/v1/users/me/dataSources",
+        data: data,
+        headers: {
+            "Authorization" : "Bearer " + token,
+            "Content-Type": "application/json;encoding=utf-8"
+        },
+        dataType: 'json',
+        success: function (data) {
+            
+            if(jQuery.isEmptyObject(data)) { 
+
+              console.log("empty");
+              createDataSource();
+            }
+
+            console.log(data);
+        },
+        error: function () {
+            console.log('error');
+        }
+    });
+}
+
 $(document).ready(function () {
 
+    getUserDataSource();
 
-    body = {
-  "dataStreamName": "MyDataSource",
-  "type": "derived",
-  "application": {
-    "detailsUrl": "http://appointment.dev/site",
-    "name": "Foo Example App",
-    "version": "1"
-  },
-  "dataType": {
-    "field": [
-      {
-        "name": "steps",
-        "format": "integer"
-      }
-    ],
-    "name": "com.google.step_count.delta"
-  },
-  "device": {
-    "manufacturer": "Example Manufacturer",
-    "model": "ExampleTablet",
-    "type": "tablet",
-    "uid": "1000001",
-    "version": "1.0"
-  }
-};
-
-    createDataSource(body);
 });
