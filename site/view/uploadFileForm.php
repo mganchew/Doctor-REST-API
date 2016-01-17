@@ -68,9 +68,8 @@ if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
     //var_dump($token);
     ?>
 
-    <input type="hidden" id="accessToken" value="<?= $token ?>">
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="js/googleAPI.js"></script>
+    <script src="../js/googleAPI.js"></script>
 
     <?php
 } else {
@@ -110,6 +109,8 @@ if ($client->getAccessToken() && isset($_GET['url'])) {
             <label for="logoutFromGoogleFit">За прекъсване на връзката натиснете бутона</label><br>
             <font color="red">
             <span class="glyphicon glyphicon-exclamation-sign"></span>
+            <input type="hidden" id="accessToken" name="accessToken" value="<?= $token ?>">
+            <?php var_dump($token) ?>
             Ако прекънете връзката стойностите от вашето устройсвто няма да бъдат записани.
             </font>
             <div>
