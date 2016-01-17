@@ -47,7 +47,7 @@ class RestModel {
         }
 
         if ($data['loginInfo']) {
-            $this->loginInfo = $data['loginInfo']*1;
+            $this->loginInfo = $data['loginInfo'] * 1;
         }
 
         if ($data['userId']) {
@@ -88,7 +88,7 @@ class RestModel {
     }
 
     public function setDoctorRating() {
-        
+
         $statement = "INSERT INTO ratings(doctor_id,rating,user_id) 
             VALUES('" . $this->doctor . "',"
                 . "'" . $this->rating . "',"
@@ -108,7 +108,10 @@ class RestModel {
 
     public function getDoctorRating() {
 
-        $statement = "select d.id, d.email, round(avg(r.rating),1) as average from doctors as d right join ratings as r on d.id = r.doctor_id where d.email = '" . $this->email . "' group by d.id";
+        $statement = "select d.id, d.email, round(avg(r.rating),1) as average"
+                . " from doctors as d right join ratings as r"
+                . " on d.id = r.doctor_id where d.email = '" . $this->email . "'"
+                . " group by d.id";
 
         try {
 
@@ -171,15 +174,21 @@ class RestModel {
     public function appointment() {
 
         if ($this->checkDB() !== false) {
-            $this->msg = array("msg" => "Избраният от вас час е вече зает.Моля изберете нов час или различен доктор!",
+            $this->msg = array(
+                "msg" => "Избраният от вас час е вече зает.Моля изберете нов час или различен доктор!",
                 "status" => 'notOk',
-                "redirectPage" => "appointments.php");
+                "redirectPage" => "appointments.php"
+            );
         } else {
             $this->insertInDB();
 
             $this->insertInCalendar();
             $this->fileUpload();
-            $this->msg = array("msg" => "Часът е успешно запазен.", "redirectPage" => "appointments.php", "status" => "ok");
+            $this->msg = array(
+                "msg" => "Часът е успешно запазен.",
+                "redirectPage" => "appointments.php",
+                "status" => "ok"
+            );
         }
 
         return json_encode($this->msg);
@@ -194,7 +203,8 @@ class RestModel {
     public function checkDB() {
 
         $this->setTime();
-        $statement = "Select * FROM appointments WHERE doctor = '$this->doctor' and time = '$this->time'";
+        $statement = "Select * FROM appointments"
+                . " WHERE doctor = '$this->doctor' and time = '$this->time'";
         $stmt = $this->link->query($statement);
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         if ($result) {
@@ -266,7 +276,9 @@ class RestModel {
         $statement = "Select * FROM appointments WHERE userId = '$this->userId'";
 
         if ($this->doctorFlag == 2) {
-            $statement = "Select doctor,time,lName,fName,email FROM appointments RIGHT JOIN users ON users.id = appointments.userId WHERE doctor = '$this->user'";
+            $statement = "Select doctor,time,lName,fName,email FROM appointments"
+                    . " RIGHT JOIN users ON users.id = appointments.userId"
+                    . " WHERE doctor = '$this->user'";
         }
 
         $stmt = $this->link->query($statement);
@@ -284,10 +296,12 @@ class RestModel {
 
     public function login() {
 
-        $statement = "Select * FROM users WHERE email = '$this->user' and password = '$this->password'";
+        $statement = "Select * FROM users WHERE"
+                . " email = '$this->user' and password = '$this->password'";
 
         if ($this->loginInfo == 2) {
-            $statement = "Select * FROM doctors WHERE email = '$this->user' and password = '$this->password'";
+            $statement = "Select * FROM doctors"
+                    . " WHERE email = '$this->user' and password = '$this->password'";
         }
 
         $stmt = $this->link->query($statement);
@@ -310,7 +324,7 @@ class RestModel {
         $response = [
             'user' => $this->user,
             'userId' => $this->userId,
-            'userInfo' =>$userInfo,
+            'userInfo' => $userInfo,
             'redirectPage' => $redirection,
             'status' => $status
         ];
@@ -352,7 +366,8 @@ class RestModel {
 
     public function getSpecsWithDoctors() {
 
-        $statement = "Select specs.id, specs.name FROM specs RIGHT JOIN doctors ON specs.id = doctors.specId group by specs.id";
+        $statement = "Select specs.id, specs.name FROM specs RIGHT JOIN doctors"
+                . " ON specs.id = doctors.specId group by specs.id";
 
         $stmt = $this->link->query($statement);
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -394,7 +409,8 @@ class RestModel {
 
     public function fileUpload() {
 
-        $statement = "INSERT INTO file(file,doctor) VALUES('" . $this->fileContent . "','" . $this->doctor . "')";
+        $statement = "INSERT INTO file(file,doctor)"
+                . " VALUES('" . $this->fileContent . "','" . $this->doctor . "')";
         $stmt = $this->link->query($statement);
     }
 
@@ -448,7 +464,17 @@ class RestModel {
 
     public function enterAllSpecs() {
 
-        $specs = array(1 => 'Ортопедия', 2 => 'Кардиология', 3 => 'Дерматология', 4 => 'Вътрешни болести', 5 => 'Гастроентерология', 6 => 'ПЕдиатрия', 7 => 'Неврология', 8 => 'Акушерство и генекология', 9 => 'Урология');
+        $specs = array(
+            1 => 'Ортопедия',
+            2 => 'Кардиология',
+            3 => 'Дерматология',
+            4 => 'Вътрешни болести',
+            5 => 'Гастроентерология',
+            6 => 'ПЕдиатрия',
+            7 => 'Неврология',
+            8 => 'Акушерство и генекология',
+            9 => 'Урология'
+        );
 
 
         foreach ($specs as $value) {
@@ -466,25 +492,27 @@ class RestModel {
     }
 
     public function search() {
-        $statement = "Select lName,fName,workAddress,email,name FROM doctors RIGHT JOIN specs ON specs.id = doctors.specId WHERE lName = '" . $this->searchField . "'";
+        $statement = "Select lName,fName,workAddress,email,name FROM doctors"
+                . " RIGHT JOIN specs ON specs.id = doctors.specId"
+                . " WHERE lName = '" . $this->searchField . "'";
         $stmt = $this->link->query($statement);
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return json_encode($result);
     }
-    
-    public function setUserDataForRating($data){
-        
+
+    public function setUserDataForRating($data) {
+
         $this->userId = $data['userId'];
         $this->doctor = $this->prepareDataForRating($data['email']);
     }
-    
-    public function getUserRatingInfoForDoctor(){
-        
-        $statement = "SELECT * FROM ratings WHERE user_id = $this->userId AND doctor_id = $this->doctor";
+
+    public function getUserRatingInfoForDoctor() {
+
+        $statement = "SELECT * FROM ratings"
+                . " WHERE user_id = $this->userId AND doctor_id = $this->doctor";
         $stmt = $this->link->query($statement);
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return json_encode($result);
-        
     }
 
 }
