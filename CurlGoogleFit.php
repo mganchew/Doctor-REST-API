@@ -14,7 +14,7 @@ class CurlGoogleFit
     protected $data;
     protected $rawData;
     protected $postData;
-    protected $getMethod;
+    protected $method;
 
 
     public function setPostData($postData)
@@ -24,9 +24,16 @@ class CurlGoogleFit
 
     }
 
-    public function setMethod()
+    public function setMethod($method)
     {
 
+        $this->method = $method;
+
+    }
+
+    public function getMethod(){
+
+        return $this->method;
 
     }
 
@@ -54,7 +61,7 @@ class CurlGoogleFit
     public function getResponse()
     {
 
-        $credentials = 'ya29.bwJyJFx8IrwKg9t_NtjD9kiWsmaUXPpKSTKRUdP9FydDHZlkNlWMYH8u8wlNgvbURGzg';
+        $credentials = 'ya29.bwJyJFx8IrwKg9t_NtjD9kiWsmaUXPpKSTKRUdP9FydDHZlkNlWMYH8u8wlNgvbURGzg1';
         $headers = array(
 
             "Authorization: Bearer $credentials",
@@ -67,7 +74,7 @@ class CurlGoogleFit
         curl_setopt($handle, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($handle, CURLOPT_RETURNTRANSFER, TRUE);
         if (isset($this->postData)) {
-            curl_setopt($handle, CURLOPT_CUSTOMREQUEST, 'PATCH');
+            curl_setopt($handle, CURLOPT_CUSTOMREQUEST, $this->getMethod());
             curl_setopt($handle, CURLOPT_POSTFIELDS, $this->getPostData());
         }else{
             curl_setopt($handle, CURLOPT_CUSTOMREQUEST, 'GET');
@@ -113,4 +120,4 @@ $data1 = json_decode($response->getResponse());
 //
 //
 //}
-var_dump(json_decode($response->getResponse()));
+var_dump(json_decode($response->getResponse(),true)['error']['code']);

@@ -75,6 +75,12 @@ switch ($scriptNameParts[2]){
         $obj->setUserDataForRating($data);
         $response = $obj->getUserRatingInfoForDoctor();
         break;
+
+    case "checkAndCreateResources":
+        echo json_encode('this is a test');exit();
+        $obj->setDataForAppointmentCheck($data);
+        $response = $obj->checkAndCreateResources();
+        break;
     
     default:
         $response = json_encode("The request URL is missing");

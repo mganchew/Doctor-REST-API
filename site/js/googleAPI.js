@@ -6,7 +6,7 @@
 
 function createDataSource(data) {
     var body = {
-        "dataStreamName": "hearthbeat123",
+        "dataStreamName": "hearthbeat1234",
         "type": "derived",
         "application": {
             "detailsUrl": "http://http://appointment.dev",
@@ -16,7 +16,7 @@ function createDataSource(data) {
         "dataType": {
             "field": [
                 {
-                    "name": "hearthbeat",
+                    "name": "hearthbeat1234",
                     "format": "integer"
                 }
             ],
@@ -68,7 +68,7 @@ function getUserDataSource(data) {
             $.each(data, function (key, value) {
                 //console.log('data');
                 $.each(value, function (key1, value1) {
-                    if (value1.dataStreamName == 'hearthbeat123') {
+                    if (value1.dataStreamName == 'hearthbeat1234') {
                         heartbeat = true;
                     }
                 });
@@ -82,7 +82,7 @@ function getUserDataSource(data) {
                     //console.log('data');
                     $.each(value, function (key1, value1) {
                         console.log(value1);
-                        if (value1.dataStreamName == 'hearthbeat123') {
+                        if (value1.dataStreamName == 'hearthbeat1234') {
                             console.log(value1);
                             console.log(value1.dataStreamId);
                             populateDataSource(value1.dataStreamId)
@@ -106,17 +106,17 @@ function populateDataSource(dataSourceId) {
 
     var body = {
         "dataSourceId": dataSourceId,
-        "maxEndTimeNs": 1397515179728708316,
-        "minStartTimeNs": 1397513334728708316,
+        "maxEndTimeNs": 1453282751243623930,
+        "minStartTimeNs": 1453282751243623910,
         "point": [
             {
                 "dataTypeName": dataTypeName,
-                "endTimeNanos": 1397513365565713993,
+                "endTimeNanos": 1453282751243623925,
                 "originDataSourceId": "",
-                "startTimeNanos": 1397513334728708316,
+                "startTimeNanos": 1453282751243623925,
                 "value": [
                     {
-                        "intVal": 10
+                        "intVal": 22
                     }
                 ]
             }
@@ -127,8 +127,8 @@ function populateDataSource(dataSourceId) {
 
     $.ajax({
         type: 'GET',
-        url: "https://www.googleapis.com/fitness/v1/users/me/dataSources/" + dataSourceId + "/datasets/1453282751243623925-1453282751243623925",
-        data: JSON.stringify(body),
+        url: "https://www.googleapis.com/fitness/v1/users/me/dataSources/" + dataSourceId + "/datasets/1453282751243623910-1453282751243623930",
+        //data: JSON.stringify(body),
         headers: {
             "Authorization": "Bearer " + token,
             "Content-Type": "application/json;encoding=utf-8"
@@ -147,8 +147,28 @@ function populateDataSource(dataSourceId) {
 
 }
 
+function checkOrCreate(){
+    var tokenId = $("#accessToken").val();
+
+    $.ajax({
+        type: 'POST',
+        url: "http://appointment.dev/REST.php/checkAndCreateResources",
+        data: {token:tokenId},
+        dataType: 'json',
+        success: function (data) {
+            console.log(data);
+            //console.log(data.point[0].value[0].intVal);
+        },
+        error: function () {
+            console.log('error');
+        }
+    });
+
+}
+
 $(document).ready(function () {
 
-    getUserDataSource();
+    //getUserDataSource();
+    checkOrCreate();
 
 });
