@@ -608,13 +608,6 @@ class RestModel
     public function insertDataSetInGoogleFit()
     {
 
-
-    }
-
-    public function insertDataSetInDB()
-    {
-
-
     }
 
     public function getAllDataSetsForUser()
