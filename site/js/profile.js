@@ -81,7 +81,7 @@ function getUserRatingInfoForDoctor(currentUserInfo) {
                     $("#userRating").append("<p>Вече сте гласували за този доктор.</p>");
                 }
             }
-            
+
         },
         error: function (data) {
             //console.log(data);
@@ -155,8 +155,10 @@ function submitProfileForm(values) {
 
     if ($.urlParam('type') === "1") {
 
-        userData = {email: values['email'], fName: values['fName'],
-            lName: values['lName'], userInfo: values['userInfo']};
+        userData = {
+            email: values['email'], fName: values['fName'],
+            lName: values['lName'], userInfo: values['userInfo']
+        };
 
     }
 
@@ -179,13 +181,52 @@ function submitProfileForm(values) {
 }
 
 function getGoogleFitData() {
+    var tokenId = $("#accessToken").val();
+    table = $("#googleFitData");
+    $.ajax({
+        type: 'POST',
+        url: "http://appointment.dev/REST.php/getAllDataSetsForUser",
+        data: {token: tokenId},
+        dataType: 'json',
+        success: function (data) {
+            $.each(data.point,function(key,value){
+                hearthrate = value.value[0].intVal;
+                //TODO append to table
+                console.log(hearthrate);
 
-    console.log('make it work');
+            });
+
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
+
+}
+
+function insertGoogleFitData(){
+
+    var tokenId = 'ya29.cQJd9cJ2YlZr9Szl-MhsZ87LV2tmlNuYXdRFeHGGQUSeSNWoTqBJHbSPjOY5JfRwvvO8og';
+    $.ajax({
+        type: 'POST',
+        url: "http://appointment.dev/REST.php/insertDataSetInGoogleFit",
+        data: {token: tokenId},
+        dataType: 'json',
+        success: function (data) {
+            //console.log(userData);
+            console.log(data);
+
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
 
 }
 
 $(document).ready(function () {
-
+    insertGoogleFitData();
+    getGoogleFitData();
     getRatings();
     getSpecs();
     loadProfileInfo();
@@ -199,7 +240,7 @@ $(document).ready(function () {
 
     currentUserInfo = $("#currentUserInfo").val();
     getUserRatingInfoForDoctor(currentUserInfo);
-    
+
     $("#vote").click(function (event) {
 
         popupVote();

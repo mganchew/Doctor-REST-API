@@ -1,6 +1,6 @@
 <?php
 require 'header.php';
-$_SESSION['user'] = 'user';
+
 /*
  * This code is an adaptation of Google API URL Shortener example from Google PHP API github.
  * This was modified to work with Google Fit.

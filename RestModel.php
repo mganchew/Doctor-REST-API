@@ -32,7 +32,7 @@ class RestModel
     public function __construct($data)
     {
 
-        $this->link = new PDO('mysql:host=localhost;dbname=test;charset=utf8', 'root', '');
+        $this->link = new PDO('mysql:host=localhost;dbname=test;charset=utf8', 'root', 'root');
 
         if ($data['user']) {
             $this->user = $data['user'];
@@ -564,14 +564,13 @@ class RestModel
         $data = json_decode($this->curl->getResponse());
         foreach ($data as $key => $value) {
 
-            if ($value->dataStreamName == 'hearthbeat12345') {
-
+            if ($value[0]->dataStreamName == 'hearthbeat123') {
                 $heartbeat = true;
-                $response = ['msg' => 'Resource already created'];
+                $response = ['msg' => 'Resource already created','resource'=>$value[0]];
             }
         }
 
-        if (!$heartbeat) {
+        if ($heartbeat !== true) {
             if ($this->createResource()) {
                 $response = ['msg' => 'Resource created!'];
             } else {
@@ -608,12 +607,51 @@ class RestModel
     public function insertDataSetInGoogleFit()
     {
 
+        $body = json_decode(file_get_contents(__DIR__ . '/templates/getUserData.json'), true);
+
+        $nanoTime = time() * 1000000000;
+        $body['maxEndTimeNs'] = $nanoTime + 10000;
+        $body['minStartTimeNs'] = $nanoTime - 10000;
+        $body['point'][0]['endTimeNanos'] = $nanoTime;
+        $body['point'][0]['startTimeNanos'] = $nanoTime;
+        $body['point'][0]['value'][0]['intVal'] = 80;
+
+
+        $resourceData = json_decode($this->checkAndCreateResources(),true);
+        $urlTemplate = 'https://www.googleapis.com/fitness/v1/users/me/dataSources/<dataSourceId>/datasets/0-0';
+
+        $urlWithDataSource = str_replace('<dataSourceId>',$resourceData['resource']['dataStreamId'],$urlTemplate);
+
+        $url = str_replace(' ','%20',$urlWithDataSource);
+
+        $bodyToPost = json_encode($body);
+        $this->curl->setUrl($url);
+        $this->curl->setMethod('PATCH');
+        $this->curl->setPostData($bodyToPost);
+
+        $response = json_decode($this->curl->getResponse(), true);
+        //return json_encode(['msg'=>'ok']);
+        return json_encode($response);
+
     }
 
     public function getAllDataSetsForUser()
     {
 
+        $nanoTime = time() * 1000000000;
 
+        $start = 1;
+        $end = $nanoTime;
+        $resourceData = json_decode($this->checkAndCreateResources(),true);
+        //return json_encode($resourceData);
+        $urlTemplate = 'https://www.googleapis.com/fitness/v1/users/me/dataSources/<dataSourceId>/datasets/' . $start . '-' . $end;
+        $urlWithDataSource = str_replace('<dataSourceId>',$resourceData['resource']['dataStreamId'],$urlTemplate);
+        $url = str_replace(' ','%20',$urlWithDataSource);
+        $this->curl->setUrl($url);
+        $this->curl->setMethod('GET');
+        $response = json_decode($this->curl->getResponse(), true);
+
+        return json_encode($response);
     }
 
 }
