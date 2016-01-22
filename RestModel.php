@@ -616,7 +616,7 @@ class RestModel
         $body['minStartTimeNs'] = $nanoTime - 10000;
         $body['point'][0]['endTimeNanos'] = $nanoTime;
         $body['point'][0]['startTimeNanos'] = $nanoTime;
-        $body['point'][0]['value'][0]['intVal'] = 80;
+        $body['point'][0]['value'][0]['intVal'] = 66;
 
 
         $resourceData = json_decode($this->checkAndCreateResources(),true);
@@ -640,7 +640,7 @@ class RestModel
     public function getAllDataSetsForUser()
     {
 
-            $nanoTime = time() * 1000000000;
+            $nanoTime = $this->getNanoTime();
 
         $start = 1;
         $end = $nanoTime;
@@ -667,7 +667,7 @@ class RestModel
         $micro = $microTimeParts[1];
         $finalTime = ($timestamp . $micro) * 10;
 
-        return $finalTime;
+        return intval($finalTime);
     }
 
 }
