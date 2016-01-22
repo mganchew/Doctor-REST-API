@@ -182,6 +182,7 @@ function submitProfileForm(values) {
 
 function getGoogleFitData() {
     var tokenId = $("#accessToken").val();
+    var googleFitDataTableBody = $("#googleFitData").find('tbody');
     table = $("#googleFitData");
     $.ajax({
         type: 'POST',
@@ -190,10 +191,13 @@ function getGoogleFitData() {
         dataType: 'json',
         success: function (data) {
             $.each(data.point,function(key,value){
+                time = new Date((value.endTimeNanos / 1000000));
+                console.log(value);
+                console.log(time);
                 hearthrate = value.value[0].intVal;
                 //TODO append to table
                 console.log(hearthrate);
-
+                googleFitDataTableBody.append('<tr><th>'+ hearthrate +'</th>'+'<th>' + time +'</th></tr>')
             });
 
         },

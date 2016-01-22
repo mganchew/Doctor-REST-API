@@ -33,7 +33,7 @@ class RestModel
     {
 
         $this->link = new PDO('mysql:host=localhost;dbname=test;charset=utf8', 'root', 'root');
-
+        $this->curl = new CurlGoogleFit();
         if ($data['user']) {
             $this->user = $data['user'];
         }
@@ -554,7 +554,8 @@ class RestModel
     {
 
         $this->authToken = $data['token'];
-        $this->curl = new CurlGoogleFit();
+        file_put_contents(__DIR__ . '/templates/authToken.json',json_encode(['token'=>$this->authToken]));
+
     }
 
     public function checkAndCreateResources()
@@ -562,6 +563,7 @@ class RestModel
 
         $this->curl->setUrl('https://www.googleapis.com/fitness/v1/users/me/dataSources');
         $data = json_decode($this->curl->getResponse());
+
         foreach ($data as $key => $value) {
 
             if ($value[0]->dataStreamName == 'hearthbeat123') {
@@ -638,7 +640,7 @@ class RestModel
     public function getAllDataSetsForUser()
     {
 
-        $nanoTime = time() * 1000000000;
+            $nanoTime = time() * 1000000000;
 
         $start = 1;
         $end = $nanoTime;
@@ -652,6 +654,20 @@ class RestModel
         $response = json_decode($this->curl->getResponse(), true);
 
         return json_encode($response);
+    }
+
+    public function getNanoTime()
+    {
+        $time = microtime();
+        $timeParts = explode(' ', $time);
+
+        $timestamp = $timeParts[1];
+
+        $microTimeParts = explode('.', $timeParts[0]);
+        $micro = $microTimeParts[1];
+        $finalTime = ($timestamp . $micro) * 10;
+
+        return $finalTime;
     }
 
 }

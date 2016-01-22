@@ -83,12 +83,12 @@ switch ($scriptNameParts[2]) {
         break;
 
     case "getAllDataSetsForUser":
-        $obj->setDataForGoogleFit($data);
+        //$obj->setDataForGoogleFit($data);
         $response = $obj->getAllDataSetsForUser();
         break;
 
     case "insertDataSetInGoogleFit":
-        $obj->setDataForGoogleFit($data);
+        //$obj->setDataForGoogleFit($data);
         $response = $obj->insertDataSetInGoogleFit();
         break;
 

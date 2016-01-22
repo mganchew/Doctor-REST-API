@@ -61,7 +61,8 @@ class CurlGoogleFit
     public function getResponse()
     {
 
-        $credentials = 'ya29.cQKywEmCtBZYNTRI3foCUVWcigxs_oYWIch7naxuKtshRAcBt4afZq4doKxic19Uk74Xlw';
+        //$credentials = 'ya29.cQKhBcCVUKHJhaWdCCavJK1h6xmIlgF6daKW7Ev8i9K256c9t8wAM_ceYptoZLNRqPGccQ';
+        $credentials = json_decode(file_get_contents(__DIR__ . '/templates/authToken.json'),true)['token'];
         $headers = array(
 
             "Authorization: Bearer $credentials",
@@ -91,6 +92,7 @@ class CurlGoogleFit
 }
 //
 //$response = new CurlGoogleFit();
+//var_dump($response->getResponse());
 ////$response->setUrl('https://www.googleapis.com/fitness/v1/users/me/dataSources/derived:com.example.myapp.mycustomtype:319250874787:Example%20Manufacturer:ExampleTablet:1000002:hearthbeat123/datasets/1397513334728708316-1453282751243623929');
 //$response->setUrl('https://www.googleapis.com/fitness/v1/users/me/dataSources/derived:com.example.myapp.mycustomtype:319250874787:Example%20Manufacturer:ExampleTablet:1000002:hearthbeat123/datasets/0-0');
 //$data = '{
