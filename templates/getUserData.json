@@ -1,0 +1,18 @@
+{
+  "dataSourceId": "derived:com.example.myapp.mycustomtype:319250874787:Example Manufacturer:ExampleTablet:1000002:hearthbeat123",
+  "maxEndTimeNs": 1397515179728708316,
+  "minStartTimeNs": 1397513334728708316,
+  "point": [
+    {
+      "dataTypeName": "com.example.myapp.mycustomtype",
+      "endTimeNanos": 1397513365565713993,
+      "originDataSourceId": "",
+      "startTimeNanos": 1397513334728708316,
+      "value": [
+        {
+          "intVal": 21
+        }
+      ]
+    }
+  ]
+}

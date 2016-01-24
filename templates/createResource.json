@@ -1,0 +1,25 @@
+{
+  "dataStreamName": "hearthbeat1234",
+  "type": "derived",
+  "application": {
+    "detailsUrl": "http://http://appointment.dev",
+    "name": "Foo Example App 2",
+    "version": "2"
+  },
+  "dataType": {
+    "field": [
+      {
+        "name": "hearthbeat1234",
+        "format": "integer"
+      }
+    ],
+    "name": "com.example.myapp.mycustomtype"
+  },
+  "device": {
+    "manufacturer": "Example Manufacturer",
+    "model": "ExampleTablet",
+    "type": "tablet",
+    "uid": "1000002",
+    "version": "1.0"
+  }
+}

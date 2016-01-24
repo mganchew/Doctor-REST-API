@@ -27,7 +27,14 @@ $client->setClientId($client_id);
 $client->setClientSecret($client_secret);
 $client->setRedirectUri($redirect_uri);
 
-$client->addScope(Google_Service_Fitness::FITNESS_ACTIVITY_READ);
+$client->addScope([
+    Google_Service_Fitness::FITNESS_ACTIVITY_READ,
+    Google_Service_Fitness::FITNESS_ACTIVITY_WRITE,
+    Google_Service_Fitness::FITNESS_BODY_READ,
+    Google_Service_Fitness::FITNESS_BODY_WRITE,
+    Google_Service_Fitness::FITNESS_LOCATION_READ,
+    Google_Service_Fitness::FITNESS_LOCATION_WRITE
+]);
 $service = new Google_Service_Fitness($client);
 
 /* * **********************************************
