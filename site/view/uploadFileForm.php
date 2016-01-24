@@ -109,10 +109,12 @@ if ($client->getAccessToken() && isset($_GET['url'])) {
             <label for="logoutFromGoogleFit">За прекъсване на връзката натиснете бутона</label><br>
             <font color="red">
             <span class="glyphicon glyphicon-exclamation-sign"></span>
-            <input type="hidden" id="accessToken" name="accessToken" value="<?= $token ?>">
-            <?php var_dump($token) ?>
+            
+            
             Ако прекънете връзката стойностите от вашето устройсвто няма да бъдат записани.
             </font>
+            <input type="hidden" id="accessToken" name="accessToken" value="<?= $token ?>">
+            
             <div>
                 <a class='btn btn-danger' href='?logout'id="logoutFromGoogleFit">Прекъсване на връзка</a>
             </div>

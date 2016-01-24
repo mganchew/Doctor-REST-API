@@ -15,7 +15,7 @@ $fileName = "/dev/rfcomm0";
 //}
 
 $handle = fopen($fileName, "r");
-$binarydata = fread($handle, 40);
+$binarydata = fread($handle, 100);
 $byteArray = unpack("C*",$binarydata);
 
 $arrLenght = count($byteArray);
