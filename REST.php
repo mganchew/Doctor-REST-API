@@ -88,8 +88,13 @@ switch ($scriptNameParts[2]) {
         break;
 
     case "insertDataSetInGoogleFit":
-        //$obj->setDataForGoogleFit($data);
+        $obj->setDataForGoogleFitInsert($data);
         $response = $obj->insertDataSetInGoogleFit();
+        break;
+    
+    case "getAllDataSetsForUserFromDB":
+        $obj->prepareDataForMeasurements;
+        $response = $obj->getAllDataSetsForUserFromDB();
         break;
 
     default:

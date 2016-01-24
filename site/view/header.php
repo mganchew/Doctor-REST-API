@@ -31,7 +31,8 @@ if (!$_SESSION['user'] && $_SERVER['SCRIPT_NAME'] != "/site/view/startPage.php")
             <div class = "container">
 
                 <a href = "uploadFileForm.php" class = "navbar-brand">Курсов проект</a>
-                
+                <input type="hidden" id="userId" value="<?=$_SESSION['userId']?>">
+                <input type="hidden" id="userInfo" value="<?=$_SESSION['userInfo']?>">
 
                 <button class = "navbar-toggle" data-toggle = "collapse" data-target = ".navHeaderCollapse">
 

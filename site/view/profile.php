@@ -108,13 +108,13 @@ if (!isset($_GET['editable'])) {
 
         <div class="col-md-1 text-center" ></div>
         
-        <div class="col-md-4 text-center" >
+        <div class="col-md-4 text-center" id="StatsTable">
             <label for="googleFitData">Показатели</label>
             <table class="table table-bordered text-center" name="googleFitData" id="googleFitData">
                 <thead>
                     <tr>
-                        <th width="200" class="text-center">Пулс</th>
-                        <th width="200" class="text-center">Кислородно насищане</th>
+                        <th width="100" class="text-center">Пулс</th>
+                        <th width="300" class="text-center">Дата</th>
 
                     </tr>
                 </thead>

@@ -112,6 +112,7 @@ if ($client->getAccessToken() && isset($_GET['url'])) {
             <a class='btn btn-primary' href='<?= $authUrl ?>'>Свързване с GoogleFit!</a>
             <?php
         } else {
+            var_dump($token);
             ?>
             <label for="logoutFromGoogleFit">За прекъсване на връзката натиснете бутона</label><br>
             <font color="red">

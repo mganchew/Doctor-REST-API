@@ -181,40 +181,75 @@ function submitProfileForm(values) {
 }
 
 function getGoogleFitData() {
-    var tokenId = $("#accessToken").val();
+
+    //var tokenId = $("#accessToken").val();
     var googleFitDataTableBody = $("#googleFitData").find('tbody');
     table = $("#googleFitData");
+    months = [
+        'Dummy',
+        'Януари',
+        'Февруари',
+        'Март',
+        'Април',
+        'Май',
+        'Юни',
+        'Юли',
+        'Август',
+        'Септември',
+        'Октомври',
+        'Ноември',
+        'Декември'
+    ];
+
+   var url = "http://appointment.dev/REST.php/getAllDataSetsForUser";
+    if($("#userInfo").val() == "2"){
+        
+       url = "http://appointment.dev/REST.php/getAllDataSetsForUserFromDB";
+       
+    }
+    $userEmail = $.urlParam('user');
+    
     $.ajax({
         type: 'POST',
-        url: "http://appointment.dev/REST.php/getAllDataSetsForUser",
-        data: {token: tokenId},
+        url: url,
+        data: {email: $userEmail},
         dataType: 'json',
         success: function (data) {
-            $.each(data.point,function(key,value){
+            console.log(data);
+            $.each(data.point, function (key, value) {
                 time = new Date((value.endTimeNanos / 1000000));
-                console.log(value);
-                console.log(time);
+                day = time.getDate();
+                month = time.getMonth();
+                month += 1;
+                year = time.getFullYear();
+                hour = time.getHours();
+                minutes = time.getMinutes();
+                seconds = time.getSeconds();
+                formatedDate = day + '-' + months[month] + '-' + year + ', ' + hour + ':' + minutes + ':' + seconds;
+               // console.log(value);
+               // console.log(time);
                 hearthrate = value.value[0].intVal;
-                //TODO append to table
-                console.log(hearthrate);
-                googleFitDataTableBody.append('<tr><th>'+ hearthrate +'</th>'+'<th>' + time +'</th></tr>')
+                //console.log(hearthrate);
+                googleFitDataTableBody.append('<tr><th class="text-center">' + hearthrate + '</th>' + '<th class="text-center">' + formatedDate + '</th></tr>')
             });
 
         },
         error: function (data) {
-            console.log(data);
+            //console.log(data);
         }
     });
 
 }
 
-function insertGoogleFitData(){
+function insertGoogleFitData() {
 
-    var tokenId = 'ya29.cQJd9cJ2YlZr9Szl-MhsZ87LV2tmlNuYXdRFeHGGQUSeSNWoTqBJHbSPjOY5JfRwvvO8og';
+    userId = $("#userId").val();
+    
+    console.log(userId);
     $.ajax({
         type: 'POST',
         url: "http://appointment.dev/REST.php/insertDataSetInGoogleFit",
-        data: {token: tokenId},
+        data: {userId: userId},
         dataType: 'json',
         success: function (data) {
             //console.log(userData);
@@ -229,7 +264,8 @@ function insertGoogleFitData(){
 }
 
 $(document).ready(function () {
-    insertGoogleFitData();
+    //insertGoogleFitData();
+    
     getGoogleFitData();
     getRatings();
     getSpecs();
@@ -240,6 +276,10 @@ $(document).ready(function () {
 
     if ($.urlParam('type') == 1) {
         $("#userRating").hide();
+    }
+    
+    if($.urlParam('type') == 2){
+        $("#StatsTable").hide();
     }
 
     currentUserInfo = $("#currentUserInfo").val();
