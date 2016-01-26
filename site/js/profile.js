@@ -126,6 +126,21 @@ function populateProfile(frm, data) {
     });
 
 }
+
+function getAllTableData() {
+    var rowvalues = [];
+    $("tbody > tr").each(function () {
+        var rowvalue = [];
+        $(this).children().each(function () {
+            //alert($(this).text());
+            rowvalue.push($(this).text());
+        });
+        rowvalues.push(rowvalue);
+    });
+
+    return rowvalues;
+}
+
 function loadProfileInfo() {
     $.ajax({
         type: 'POST',
@@ -184,6 +199,7 @@ function getGoogleFitData() {
 
     //var tokenId = $("#accessToken").val();
     var googleFitDataTableBody = $("#googleFitData").find('tbody');
+    //console.log(googleFitDataTableBody.val());
     table = $("#googleFitData");
     months = [
         'Dummy',
@@ -201,21 +217,22 @@ function getGoogleFitData() {
         'Декември'
     ];
 
-   var url = "http://appointment.dev/REST.php/getAllDataSetsForUser";
-    if($("#userInfo").val() == "2"){
-        
-       url = "http://appointment.dev/REST.php/getAllDataSetsForUserFromDB";
-       
+    var url = "http://appointment.dev/REST.php/getAllDataSetsForUser";
+    if ($("#userInfo").val() == "2") {
+
+        url = "http://appointment.dev/REST.php/getAllDataSetsForUserFromDB";
+
     }
     $userEmail = $.urlParam('user');
-    
+
     $.ajax({
         type: 'POST',
         url: url,
         data: {email: $userEmail},
         dataType: 'json',
         success: function (data) {
-            console.log(data);
+            console.log('every 5 seconds');
+            //console.log(data);
             $.each(data.point, function (key, value) {
                 time = new Date((value.endTimeNanos / 1000000));
                 day = time.getDate();
@@ -226,11 +243,19 @@ function getGoogleFitData() {
                 minutes = time.getMinutes();
                 seconds = time.getSeconds();
                 formatedDate = day + '-' + months[month] + '-' + year + ', ' + hour + ':' + minutes + ':' + seconds;
-               // console.log(value);
-               // console.log(time);
                 hearthrate = value.value[0].intVal;
                 //console.log(hearthrate);
-                googleFitDataTableBody.append('<tr><th class="text-center">' + hearthrate + '</th>' + '<th class="text-center">' + formatedDate + '</th></tr>')
+                tableData = getAllTableData();
+                console.log(tableData);
+                if(jQuery.isEmptyObject(tableData)){
+                    googleFitDataTableBody.append('<tr><th class="text-center">' + hearthrate + '</th>' + '<th class="text-center">' + formatedDate + '</th></tr>');
+                }
+                $.each(tableData,function(rowKey,rowData){
+                    if(rowData[1] !== formatedDate){
+                        googleFitDataTableBody.append('<tr><th class="text-center">' + hearthrate + '</th>' + '<th class="text-center">' + formatedDate + '</th></tr>');
+                    }
+                });
+
             });
 
         },
@@ -239,12 +264,13 @@ function getGoogleFitData() {
         }
     });
 
+
 }
 
 function insertGoogleFitData() {
 
     userId = $("#userId").val();
-    
+
     console.log(userId);
     $.ajax({
         type: 'POST',
@@ -265,7 +291,9 @@ function insertGoogleFitData() {
 
 $(document).ready(function () {
     //insertGoogleFitData();
-    
+    setInterval(function () {
+        getGoogleFitData();
+    }, 10000);
     getGoogleFitData();
     getRatings();
     getSpecs();
@@ -277,8 +305,8 @@ $(document).ready(function () {
     if ($.urlParam('type') == 1) {
         $("#userRating").hide();
     }
-    
-    if($.urlParam('type') == 2){
+
+    if ($.urlParam('type') == 2) {
         $("#StatsTable").hide();
     }
 
