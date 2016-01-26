@@ -272,6 +272,19 @@ function getFormatedDate(timeNS, months) {
     hour = time.getHours();
     minutes = time.getMinutes();
     seconds = time.getSeconds();
+    console.log(minutes);
+
+    if(minutes < 10){
+        minutes = '0' + minutes;
+    }
+
+    if(seconds < 10){
+        seconds = '0' + seconds;
+    }
+
+    if(hour < 10){
+        hour = '0' + hour;
+    }
     formatedDate = day + '-' + months[month] + '-' + year + ', ' + hour + ':' + minutes + ':' + seconds;
     return formatedDate;
 }
