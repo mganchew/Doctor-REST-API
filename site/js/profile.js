@@ -1,7 +1,7 @@
 $.urlParam = function (name) {
     var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
     return results[1] || 0;
-}
+};
 dataToSend = {user: $.urlParam('user'), doctorFlag: $.urlParam('type')};
 
 
@@ -197,10 +197,7 @@ function submitProfileForm(values) {
 
 function getGoogleFitData() {
 
-    //var tokenId = $("#accessToken").val();
     var googleFitDataTableBody = $("#googleFitData").find('tbody');
-    //console.log(googleFitDataTableBody.val());
-    table = $("#googleFitData");
     months = [
         'Dummy',
         'Януари',
@@ -223,6 +220,7 @@ function getGoogleFitData() {
         url = "http://appointment.dev/REST.php/getAllDataSetsForUserFromDB";
 
     }
+
     $userEmail = $.urlParam('user');
 
     $.ajax({
@@ -234,24 +232,18 @@ function getGoogleFitData() {
             console.log('every 5 seconds');
             //console.log(data);
             $.each(data.point, function (key, value) {
-                time = new Date((value.endTimeNanos / 1000000));
-                day = time.getDate();
-                month = time.getMonth();
-                month += 1;
-                year = time.getFullYear();
-                hour = time.getHours();
-                minutes = time.getMinutes();
-                seconds = time.getSeconds();
-                formatedDate = day + '-' + months[month] + '-' + year + ', ' + hour + ':' + minutes + ':' + seconds;
+
+                formatedDate = getFormatedDate(value.endTimeNanos, months);
+
                 hearthrate = value.value[0].intVal;
                 //console.log(hearthrate);
                 tableData = getAllTableData();
                 console.log(tableData);
-                if(jQuery.isEmptyObject(tableData)){
+                if (jQuery.isEmptyObject(tableData)) {
                     googleFitDataTableBody.append('<tr><th class="text-center">' + hearthrate + '</th>' + '<th class="text-center">' + formatedDate + '</th></tr>');
                 }
-                $.each(tableData,function(rowKey,rowData){
-                    if(rowData[1] !== formatedDate){
+                $.each(tableData, function (rowKey, rowData) {
+                    if (rowData[1] !== formatedDate) {
                         googleFitDataTableBody.append('<tr><th class="text-center">' + hearthrate + '</th>' + '<th class="text-center">' + formatedDate + '</th></tr>');
                     }
                 });
@@ -265,6 +257,19 @@ function getGoogleFitData() {
     });
 
 
+}
+
+function getFormatedDate(timeNS, months) {
+    time = new Date((timeNS / 1000000));
+    day = time.getDate();
+    month = time.getMonth();
+    month += 1;
+    year = time.getFullYear();
+    hour = time.getHours();
+    minutes = time.getMinutes();
+    seconds = time.getSeconds();
+    formatedDate = day + '-' + months[month] + '-' + year + ', ' + hour + ':' + minutes + ':' + seconds;
+    return formatedDate;
 }
 
 function insertGoogleFitData() {
