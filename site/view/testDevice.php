@@ -1,12 +1,13 @@
 <?php
 header('Access-Control-Allow-Origin: *');
-
+require '../../autoload.php';
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 $userId = intval($_POST['userId']);
+
 $fileName = "/dev/rfcomm0";
 //if(file_exists($fileName)){
 //    echo "ok\n";
@@ -33,16 +34,16 @@ $fileName = "/dev/rfcomm0";
 //
 //}
 $heartRate = 77;
-
-?>
-    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
-
-<input type="text" name="heartrate" id="heartrate" value="<?=$heartRate?>">
-<input type="text" name="userId" id="userId" value="<?=$userId?>">
-<script src="../js/hearthrate.js"></script>
-<?php
+$userId = 1;
+$data = ['heartrate'=>$heartRate,'userId'=>$userId];
+$curl = new CurlGoogleFit();
+$curl->setMethod('POST');
+$curl->setPostDataForInsert($data);
+$curl->setUrl('http://appointment.dev/REST.php/insertDataSetInGoogleFit');
+$curl->removeHeaders();
+$response = $curl->getResponse();
+echo "<pre>";
+var_dump($response);
 
 //echo json_encode(['msg'=>'ok']);
 //$response = ['hearthrate'=>$hearthRate, 'spo'=>$spo];
@@ -58,13 +59,13 @@ $heartRate = 77;
 
 //fclose($fp);
 //
-////$filename = "myFile.sav"; 
-//$handle = fopen($filename, "rb"); 
-//$fsize = filesize($filename); 
+////$filename = "myFile.sav";
+//$handle = fopen($filename, "rb");
+//$fsize = filesize($filename);
 //$contents = fread($handle, 22);
-//$byteArray = unpack("N*",$contents); 
-//print_r($byteArray); 
+//$byteArray = unpack("N*",$contents);
+//print_r($byteArray);
 //for($n = 0; $n < 16; $n++)
-//{ 
-//    echo $byteArray[$n].'<br/>'; 
+//{
+//    echo $byteArray[$n].'<br/>';
 //}

@@ -5,7 +5,6 @@ require 'autoload.php';
 $scriptNameParts = explode('/', $_SERVER['REQUEST_URI']);
 
 $data = $_POST;
-
 $obj = new RestModel($data);
 
 switch ($scriptNameParts[2]) {

@@ -276,27 +276,27 @@ function getFormatedDate(timeNS, months) {
     return formatedDate;
 }
 
-function insertGoogleFitData() {
-
-    userId = $("#userId").val();
-
-    console.log(userId);
-    $.ajax({
-        type: 'POST',
-        url: "http://appointment.dev/REST.php/insertDataSetInGoogleFit",
-        data: {userId: userId},
-        dataType: 'json',
-        success: function (data) {
-            //console.log(userData);
-            console.log(data);
-
-        },
-        error: function (data) {
-            console.log(data);
-        }
-    });
-
-}
+//function insertGoogleFitData() {
+//
+//    userId = $("#userId").val();
+//
+//    console.log(userId);
+//    $.ajax({
+//        type: 'POST',
+//        url: "http://appointment.dev/REST.php/insertDataSetInGoogleFit",
+//        data: {userId: userId},
+//        dataType: 'json',
+//        success: function (data) {
+//            //console.log(userData);
+//            console.log(data);
+//
+//        },
+//        error: function (data) {
+//            console.log(data);
+//        }
+//    });
+//
+//}
 
 $(document).ready(function () {
     //insertGoogleFitData();

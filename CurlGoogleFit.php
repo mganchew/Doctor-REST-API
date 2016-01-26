@@ -15,6 +15,7 @@ class CurlGoogleFit
     protected $rawData;
     protected $postData;
     protected $method;
+    protected $removedHeaders = false;
 
 
     public function setPostData($postData)
@@ -58,10 +59,21 @@ class CurlGoogleFit
 
     }
 
-    public function getResponse()
-    {
+    public function setPostDataForInsert($data){
 
-        //$credentials = 'ya29.cQKhBcCVUKHJhaWdCCavJK1h6xmIlgF6daKW7Ev8i9K256c9t8wAM_ceYptoZLNRqPGccQ';
+        foreach ($data as $key => $val) {
+
+            $this->rawData .= $key . "=" . $val . "&";
+
+        }
+        $this->postData = rtrim($this->rawData, "&");
+    }
+
+    public function removeHeaders(){
+        $this->removedHeaders = true;
+    }
+
+    public function getHeaders(){
         $credentials = json_decode(file_get_contents(__DIR__ . '/templates/authToken.json'),true)['token'];
         $headers = array(
 
@@ -69,6 +81,17 @@ class CurlGoogleFit
             "Content-Type: application/json;encoding=utf-8"
 
         );
+        return $headers;
+    }
+
+    public function getResponse()
+    {
+
+        //$credentials = 'ya29.cQKhBcCVUKHJhaWdCCavJK1h6xmIlgF6daKW7Ev8i9K256c9t8wAM_ceYptoZLNRqPGccQ';
+        $headers = [];
+        if($this->removedHeaders == false){
+            $headers = $this->getHeaders();
+        }
 
         $handle = curl_init();
         curl_setopt($handle, CURLOPT_URL, $this->getUrl());

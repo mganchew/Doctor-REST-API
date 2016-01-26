@@ -190,13 +190,13 @@ $(document).ready(function () {
     //getUserDataSource();
     checkOrCreate();
 
-    $("#takeHearthrate").click(function (event) {
-
-        event.preventDefault(); // cancel default behavior
-
-        deviceDataCall();
-
-
-    });
+    //$("#takeHearthrate").click(function (event) {
+    //
+    //    event.preventDefault(); // cancel default behavior
+    //
+    //    deviceDataCall();
+    //
+    //
+    //});
 
 });

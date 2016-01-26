@@ -564,7 +564,6 @@ class RestModel
 
         $this->userId = $data['userId'];
         $this->heartrate = $data['heartrate'];
-        //file_put_contents('/home/mladen/dev/personal.git/Doctor-REST-API/test.json',json_encode($data));
     }
 
 
@@ -573,7 +572,7 @@ class RestModel
 
         $this->curl->setUrl('https://www.googleapis.com/fitness/v1/users/me/dataSources');
         $data = json_decode($this->curl->getResponse());
-
+        $heartbeat = false;
         foreach ($data as $key => $value) {
 
             if ($value[0]->dataStreamName == 'hearthbeat123') {

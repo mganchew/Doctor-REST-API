@@ -24,31 +24,52 @@
 //
 //}
 //
-$(document).ready(function () {
 
-    $("#takeHearthrate").click(function (event) {
-
-        event.preventDefault();
-        takeHearthrateFromDevice();
-
-    });
-});
-function takeHearthrateFromDevice() {
-    var userId = $("#userId").val();
-    //TODO MAKE IT WORK
-    var heartrate = $("#heartrate").val();
-
+function deviceDataCall(){
+    userId = $("#userId").val();
+    console.log(userId);
     $.ajax({
         type: 'POST',
-        url: "http://appointment.dev/REST.php/insertDataSetInGoogleFit",
-        data: {heartrate: heartrate, userId: userId},
+        url: "testDevice.php",
+        data: {userId : userId },
         dataType: 'json',
         success: function (data) {
             console.log(data);
             //console.log(data.point[0].value[0].intVal);
         },
         error: function () {
-            console.log('errorInserting');
+            console.log('error');
         }
     });
+
 }
+
+$(document).ready(function () {
+
+    $("#takeHearthrate").click(function (event) {
+
+        event.preventDefault();
+        deviceDataCall();
+
+    });
+});
+
+//function takeHearthrateFromDevice() {
+//    var userId = $("#userId").val();
+//    //TODO MAKE IT WORK
+//    var heartrate = $("#heartrate").val();
+//
+//    $.ajax({
+//        type: 'POST',
+//        url: "http://appointment.dev/REST.php/insertDataSetInGoogleFit",
+//        data: {heartrate: heartrate, userId: userId},
+//        dataType: 'json',
+//        success: function (data) {
+//            console.log(data);
+//            //console.log(data.point[0].value[0].intVal);
+//        },
+//        error: function () {
+//            console.log('errorInserting');
+//        }
+//    });
+//}

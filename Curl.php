@@ -61,16 +61,8 @@ class Curl {
         $this->setPostData();
         }
         $this->setUrl();
-        $credentials = base64_encode("");
-        $headers = array(
-
-            "Authorization: Basic $credentials"
-
-        );
-
         $handle = curl_init();
         curl_setopt($handle, CURLOPT_URL, $this->getUrl());
-        curl_setopt($handle, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($handle, CURLOPT_RETURNTRANSFER, TRUE);
         if(isset($this->postData)){
         curl_setopt($handle, CURLOPT_POST, true);
