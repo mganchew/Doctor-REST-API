@@ -166,9 +166,37 @@ function checkOrCreate(){
 
 }
 
+function deviceDataCall(){
+    userId = $("#userId").val();
+    console.log(userId);
+    $.ajax({
+        type: 'POST',
+        url: "testDevice.php",
+        data: {userId : userId },
+        dataType: 'json',
+        success: function (data) {
+            console.log(data);
+            //console.log(data.point[0].value[0].intVal);
+        },
+        error: function () {
+            console.log('error');
+        }
+    });
+
+}
+
 $(document).ready(function () {
 
     //getUserDataSource();
     checkOrCreate();
+
+    $("#takeHearthrate").click(function (event) {
+
+        event.preventDefault(); // cancel default behavior
+
+        deviceDataCall();
+
+
+    });
 
 });

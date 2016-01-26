@@ -1,11 +1,12 @@
 <?php
 header('Access-Control-Allow-Origin: *');
+
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+$userId = intval($_POST['userId']);
 $fileName = "/dev/rfcomm0";
 //if(file_exists($fileName)){
 //    echo "ok\n";
@@ -14,33 +15,39 @@ $fileName = "/dev/rfcomm0";
 //    exit('fileDoesNotExists');
 //}
 
-$handle = fopen($fileName, "r");
-$binarydata = fread($handle, 40);
-$byteArray = unpack("C*",$binarydata);
+//$handle = fopen($fileName, "r");
+//$binarydata = fread($handle, 40);
+//$byteArray = unpack("C*",$binarydata);
+//
+//$arrLenght = count($byteArray);
+//
+//for($i = 0; $i < $arrLenght; $i++){
+//
+//    if($byteArray[$i] != 128 && $byteArray[$i -1] == 128){
+//        $hearthRate[] = $byteArray[$i];
+//    }
+//
+//    if($byteArray[$i] == 36){
+//        $spo[] = $byteArray[$i -1];
+//    }
+//
+//}
+$heartRate = 77;
 
-$arrLenght = count($byteArray);
+?>
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
-for($i = 0; $i < $arrLenght; $i++){
-    
-    if($byteArray[$i] != 128 && $byteArray[$i -1] == 128){
-        $hearthRate[] = $byteArray[$i];
-    }
-    
-    if($byteArray[$i] == 36){
-        $spo[] = $byteArray[$i -1];
-    }
-    
-}
-//echo "HearthRate collection from last use:\n";
-//print_r($hearthRate);
 
-//echo "SPO collection from last use:\n";
-//print_r($spo);
-//var_dump($byteArray);
+<input type="text" name="heartrate" id="heartrate" value="<?=$heartRate?>">
+<input type="text" name="userId" id="userId" value="<?=$userId?>">
+<script src="../js/hearthrate.js"></script>
+<?php
 
-$response = ['hearthrate'=>$hearthRate, 'spo'=>$spo];
-
-echo json_encode($response);
+//echo json_encode(['msg'=>'ok']);
+//$response = ['hearthrate'=>$hearthRate, 'spo'=>$spo];
+//
+//echo json_encode($response);
 
 //$array = unpack('h22', $binarydata);
 //$array = unpack("c17/nhex", $binarydata);

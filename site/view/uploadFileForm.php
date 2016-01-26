@@ -133,8 +133,8 @@ if ($client->getAccessToken() && isset($_GET['url'])) {
 </div>
 <?php
 $fileName = "/dev/rfcomm0";
-if (file_exists($fileName)) {
-    ?>
+//if (file_exists($fileName)) {
+//    ?>
     <script src="../js/hearthrate.js"></script>
     <div class="container text-center">
         <font color="green">
@@ -151,7 +151,7 @@ if (file_exists($fileName)) {
 
     </div>
     <?php
-}
+//}
 ?>
 
 <?php

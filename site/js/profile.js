@@ -129,6 +129,7 @@ function populateProfile(frm, data) {
 
 function getAllTableData() {
     var rowvalues = [];
+    var insertedDates = [];
     $("tbody > tr").each(function () {
         var rowvalue = [];
         $(this).children().each(function () {
@@ -137,8 +138,15 @@ function getAllTableData() {
         });
         rowvalues.push(rowvalue);
     });
+    var index = 0;
+    $.each(rowvalues, function (key1, val1) {
 
-    return rowvalues;
+        //console.log(val1[1]);
+        insertedDates[index] = val1[1];
+        index++;
+    });
+    //console.log(insertedDates);
+    return insertedDates;
 }
 
 function loadProfileInfo() {
@@ -234,19 +242,15 @@ function getGoogleFitData() {
             $.each(data.point, function (key, value) {
 
                 formatedDate = getFormatedDate(value.endTimeNanos, months);
-
+                console.log(formatedDate);
                 hearthrate = value.value[0].intVal;
                 //console.log(hearthrate);
                 tableData = getAllTableData();
                 console.log(tableData);
-                if (jQuery.isEmptyObject(tableData)) {
+
+                if (jQuery.inArray(formatedDate, tableData) == -1) {
                     googleFitDataTableBody.append('<tr><th class="text-center">' + hearthrate + '</th>' + '<th class="text-center">' + formatedDate + '</th></tr>');
                 }
-                $.each(tableData, function (rowKey, rowData) {
-                    if (rowData[1] !== formatedDate) {
-                        googleFitDataTableBody.append('<tr><th class="text-center">' + hearthrate + '</th>' + '<th class="text-center">' + formatedDate + '</th></tr>');
-                    }
-                });
 
             });
 

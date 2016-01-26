@@ -88,6 +88,7 @@ switch ($scriptNameParts[2]) {
         break;
 
     case "insertDataSetInGoogleFit":
+        file_put_contents('/home/mladen/dev/personal.git/Doctor-REST-API/test.json',json_encode($data,JSON_PRETTY_PRINT));
         $obj->setDataForGoogleFitInsert($data);
         $response = $obj->insertDataSetInGoogleFit();
         break;

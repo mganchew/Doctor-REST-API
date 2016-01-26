@@ -38,8 +38,6 @@ if (!isset($_GET['editable'])) {
                 <h3>Рейтинг:</h3>
                 <p><strong><span id="rating"></span></strong></p>
 
-                <input type="hidden" id="userId" name="userId" value="<?php echo $_SESSION['userId']; ?>" />
-
                 <a href="#" id="vote" class="btn btn-primary">Гласувай</a>
             </div>
         </div>
