@@ -43,7 +43,7 @@ if (isset($_GET['long'])) {
 } else {
     echo "onload=\"getLocation()\"";
 }
-?> src="1.jpg" class = "img-circle">
+?> src="../image/1.jpg" class = "img-circle">
 
     <h3> Моля избере желаното от вас направление:</h3>
 
@@ -156,7 +156,7 @@ foreach ($hours as $value) {
         </div>
 
         <div class = "text-center">
-            <button type="submit" id="saveBtn" class="btn btn-lg btn-default"> <i class="fa fa-google-plus"></i>Запазване на час!</button>  
+            <button type="submit" id="saveBtn" class="btn btn-lg btn-primary"> <i class="fa fa-google-plus"></i>Запазване на час!</button>
         </div>
     </form>
 

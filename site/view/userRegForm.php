@@ -1,35 +1,34 @@
 <script type="text/javascript" src="../js/userReg.js"></script>
 
-<div class = "container text-center">
-            <div class = "col-md-3">
+<form  method = "POST" id="userRegister">
 
-                <form  method = "POST" id="userRegister">
+    <div class="form-group">
+        <label for = "fName">Име:</label>
+        <input type="text" class="form-control" name = "userfName" placeholder="Име">
+    </div>
 
-                    <label for = "fName">Име</label>
-                    <input type="text" class="form-control" name = "userfName"placeholder="First Name">
+    <div class="form-group">
+        <label for = "lName">Фамилия:</label>
+        <input type="text" class="form-control" name = "userlName" placeholder="Фамилия">
+    </div>
 
+    <div class="form-group">
+        <label for="email">E-mail:</label>
+        <input type="email" class = "form-control" name = "userEmail"  placeholder="example@gmail.com">
+    </div>
 
+    <div class="form-group">
+        <label for="password">Парола:</label>
+        <input type="password" class="form-control" name ="userPassword"  placeholder="Парола">
+    </div>
 
-                    <label for = "lName">Фамилия</label>
-                    <input type="text" class="form-control" name = "userlName"placeholder="Last Name">
+    <div class="form-group">
+        <label for ="cpassword">Повтори парола:</label>
+        <input type="password" class="form-control" name = "userCPassword"  placeholder="Повтори парола">
+    </div>
 
+    <div class="text-center">
+        <button type="submit" id="submitUserReg" class="btn btn-primary">Регистрация</button>
+    </div>
 
-                    <label for="email">e-mail адрес</label>
-                    <input type="email" class = "form-control" name = "userEmail" placeholder="example@gmail.com">
-
-
-
-                    <label for="password">Парола</label>
-                    <input type="password" class="form-control" name ="userPassword" placeholder="Password">
-
-                    
-                    <label for ="cpassword">Повторете своята парола</label>
-                    <input type="password" class="form-control" name = "userCPassword" placeholder="Confirm password"><br>
-
-
-                    <button type="submit" id="submitUserReg" class="btn btn-primary">Register</button>
-
-                </form>
-            </div>
-
-        </div>
+</form>

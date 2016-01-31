@@ -26,9 +26,7 @@ if (!isset($_GET['editable'])) {
 
     <div class="row">
         <div class="col-xs-6 col-md-3">
-            <a href="#" class="thumbnail">
-                <img src="1.jpg" alt="...">
-            </a>
+                <img class="img-responsive" src="../image/1.jpg" alt="Кратко Описание">
             <div class="caption text-center" id="userInfo">
                 <h3>Кратко описание</h3>
                 <p></p>

@@ -20,45 +20,47 @@ require_once 'header.php';
         ?>
             </font></h4>
     </div>
-    <div class ="row text-center">
-        <div class ="col-xs-8 col-sm-12">
-            
-            <h1>Добре дошли в системата за регистрация на час при доктор!</h1>
-            <h3>Моля влезте в системата или се регистрирайте!</h3><br><br>
-            
-        </div>
-    </div>
-    <div class ="row">
-        <div class ="col-xs-8 col-sm-6">
-            <div class="col-xs-8 col-sm-2 text-center" ></div>
-            
-            <div class="col-xs-8 col-sm-2"id="1">
-                <?php
-                require_once 'userRegForm.php';
-                ?>
-            </div>
-            <div class="col-xs-8 col-sm-2"></div>
-        </div>
 
-        <div class ="col-xs-8 col-sm-6">
-            <div class="col-xs-8 col-sm-2"></div>
-            <div class="col-xs-8 col-sm-2">
-                <?php
-                require_once 'registrationForm.php';
-                ?>
-            </div>
-            <div class="col-xs-8 col-sm-2"></div>
+
+<div class="container-fluid medi-bg">
+    <div class="container">
+        <div class ="tabs-main-container">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#login" aria-controls="login" role="tab" data-toggle="tab">Вход</a></li>
+                    <li role="presentation"><a href="#register-user" aria-controls="register-user" role="tab" data-toggle="tab">Регистрация за пациент</a></li>
+                    <li role="presentation"><a href="#register-doctor" aria-controls="register-doctor" role="tab" data-toggle="tab">Регистрация за лекар</a></li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <!-- LOGIN -->
+                    <div role="tabpanel" class="tab-pane active" id="login">
+                        <?php require_once 'loginForm.php'; ?>
+                    </div>
+
+                    <!-- REGISTRATION FOR PATIENT -->
+                    <div role="tabpanel" class="tab-pane" id="register-user">
+                        <?php require_once 'userRegForm.php'; ?>
+                    </div>
+
+                    <!-- REGISTRATION FOR DOCTOR -->
+                    <div role="tabpanel" class="tab-pane" id="register-doctor">
+                        <?php require_once 'registrationForm.php'; ?>
+                    </div>
+
+                </div>
         </div>
     </div>
-    <div class="container text-center"><h1>Влезте в системата</h1></div>
+</div>
+
+<div class="container-fluid copyright">
     <div class="container text-center">
-        <div class ="col-xs-8 col-sm-4"></div>
-        <div class ="col-xs-8 col-sm-2">
-            <?php require_once 'loginForm.php';
-            ?>
-        </div>
+        <p class="text-center">MediSys ©</p>
+        <p class="text-center">Copyright 2016 Mladen Ganchev</p>
     </div>
-    <div class ="col-xs-8 col-sm-5"></div>
+</div>
+
 </body>
 
 <?php
