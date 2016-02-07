@@ -1,7 +1,8 @@
 <?php
+
 header('Access-Control-Allow-Origin: *');
 require '../../autoload.php';
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -16,34 +17,31 @@ $fileName = "/dev/rfcomm0";
 //    exit('fileDoesNotExists');
 //}
 
-//$handle = fopen($fileName, "r");
-//$binarydata = fread($handle, 40);
-//$byteArray = unpack("C*",$binarydata);
+$handle = fopen($fileName, "r");
+$binarydata = fread($handle, 40);
+$byteArray = unpack("C*", $binarydata);
+var_dump($byteArray);exit();
+//$byteArray = [128,90,128,92,128,95];
+$arrLenght = count($byteArray);
+
+for ($i = 0; $i < $arrLenght; $i++) {
+
+    if ($byteArray[$i] != 128 && $byteArray[$i - 1] == 128) {
+        $heartRate = $byteArray[$i];
+        $data = ['heartrate' => $heartRate, 'userId' => $userId];
+        $curl = new CurlGoogleFit();
+        $curl->setMethod('POST');
+        $curl->setPostDataForInsert($data);
+        $curl->setUrl('http://appointment.dev/REST.php/insertDataSetInGoogleFit');
+        $curl->removeHeaders();
+        $response = $curl->getResponse();
+    }
+}
+//$heartRate = 77;
+//$userId = 1;
 //
-//$arrLenght = count($byteArray);
-//
-//for($i = 0; $i < $arrLenght; $i++){
-//
-//    if($byteArray[$i] != 128 && $byteArray[$i -1] == 128){
-//        $hearthRate[] = $byteArray[$i];
-//    }
-//
-//    if($byteArray[$i] == 36){
-//        $spo[] = $byteArray[$i -1];
-//    }
-//
-//}
-$heartRate = 77;
-$userId = 1;
-$data = ['heartrate'=>$heartRate,'userId'=>$userId];
-$curl = new CurlGoogleFit();
-$curl->setMethod('POST');
-$curl->setPostDataForInsert($data);
-$curl->setUrl('http://appointment.dev/REST.php/insertDataSetInGoogleFit');
-$curl->removeHeaders();
-$response = $curl->getResponse();
-echo "<pre>";
-var_dump($response);
+//echo "<pre>";
+//var_dump($response);
 
 //echo json_encode(['msg'=>'ok']);
 //$response = ['hearthrate'=>$hearthRate, 'spo'=>$spo];

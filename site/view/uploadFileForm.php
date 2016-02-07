@@ -112,7 +112,7 @@ if ($client->getAccessToken() && isset($_GET['url'])) {
             <a class='btn btn-primary' href='<?= $authUrl ?>'>Свързване с GoogleFit!</a>
             <?php
         } else {
-            var_dump($token);
+           // var_dump($token);
             ?>
             <label for="logoutFromGoogleFit">За прекъсване на връзката натиснете бутона</label><br>
             <font color="red">
@@ -133,8 +133,8 @@ if ($client->getAccessToken() && isset($_GET['url'])) {
 </div>
 <?php
 $fileName = "/dev/rfcomm0";
-//if (file_exists($fileName)) {
-//    ?>
+if (file_exists($fileName)) {
+    ?>
     <script src="../js/hearthrate.js"></script>
     <div class="container text-center">
         <font color="green">
@@ -145,13 +145,13 @@ $fileName = "/dev/rfcomm0";
 
             <h3>Моля поставете устройството.След като устройството започне да отмерва натинете бутона</h3>
 
-            <button type="submit" id="takeHearthrate" name="takeHearthrate" value="submit">Button</button>
+            <button type="submit" id="takeHearthrate" name="takeHearthrate" value="submit">Отчитане на данни</button>
 
         </form>
 
     </div>
     <?php
-//}
+}
 ?>
 
 <?php

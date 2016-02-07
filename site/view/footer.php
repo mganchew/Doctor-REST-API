@@ -17,11 +17,6 @@ if($_SESSION['userInfo']){
     <tbody></tbody>
 </table>
 
-<br><br><br><br><nav class="navbar navbar-inverse navbar-fixed-bottom">
-    <div class="container">
-        <p class="navbar-text">Created by Mladen Ganchev</p>
-    </div>
-</nav>
 <?php }
 ?>
 </body>
