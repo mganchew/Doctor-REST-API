@@ -18,9 +18,9 @@ $fileName = "/dev/rfcomm0";
 //}
 
 $handle = fopen($fileName, "r");
-$binarydata = fread($handle, 40);
+$binarydata = fread($handle, 500);
 $byteArray = unpack("C*", $binarydata);
-var_dump($byteArray);exit();
+//var_dump($byteArray);exit();
 //$byteArray = [128,90,128,92,128,95];
 $arrLenght = count($byteArray);
 
@@ -36,6 +36,9 @@ for ($i = 0; $i < $arrLenght; $i++) {
         $curl->removeHeaders();
         $response = $curl->getResponse();
     }
+}
+if (isset($heartRate)) {
+    echo json_encode(['msg' => 'ok']);
 }
 //$heartRate = 77;
 //$userId = 1;

@@ -204,7 +204,7 @@ function submitProfileForm(values) {
 }
 
 function getGoogleFitData() {
-
+   
     var googleFitDataTableBody = $("#googleFitData").find('tbody');
     months = [
         'Dummy',
@@ -244,7 +244,7 @@ function getGoogleFitData() {
                 formatedDate = getFormatedDate(value.endTimeNanos, months);
                 console.log(formatedDate);
                 hearthrate = value.value[0].intVal;
-                //console.log(hearthrate);
+                console.log(hearthrate);
                 tableData = getAllTableData();
                 console.log(tableData);
 
@@ -256,7 +256,7 @@ function getGoogleFitData() {
 
         },
         error: function (data) {
-            //console.log(data);
+            console.log(data);
         }
     });
 

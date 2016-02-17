@@ -167,6 +167,7 @@ function checkOrCreate(){
 }
 
 function deviceDataCall(){
+    var uri = "http://appointment.dev/site/view/selectDate.php?msg=UspeshnoZapazeniCasove";
     userId = $("#userId").val();
     console.log(userId);
     $.ajax({
@@ -176,6 +177,7 @@ function deviceDataCall(){
         dataType: 'json',
         success: function (data) {
             console.log(data);
+            window.location.replace(uri);
             //console.log(data.point[0].value[0].intVal);
         },
         error: function () {

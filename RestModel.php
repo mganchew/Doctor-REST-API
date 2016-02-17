@@ -33,7 +33,7 @@ class RestModel
     public function __construct($data)
     {
 
-        $this->link = new PDO('mysql:host=localhost;dbname=test;charset=utf8', 'root', 'root');
+        $this->link = new PDO('mysql:host=localhost;dbname=test;charset=utf8', 'root', '');
         $this->curl = new CurlGoogleFit();
         if ($data['user']) {
             $this->user = $data['user'];
@@ -337,7 +337,7 @@ class RestModel
             $userInfo = 1;
             if ($this->loginInfo == 2) {
                 $userInfo = 2;
-                $redirection = 'viewPacientData.php';
+                $redirection = 'appointments.php';
             }
             $status = 'Ok';
         }
@@ -641,7 +641,7 @@ class RestModel
         $response = json_decode($this->curl->getResponse(), true);
 
         //TODO change the value and uncomment db insertion
-        // $this->insertMeasurementsInDB(66, $nanoTime['end']);
+         $this->insertMeasurementsInDB($this->heartrate, $nanoTime['end']);
         //return json_encode(['msg'=>'ok']);
         return json_encode($response);
     }

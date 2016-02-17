@@ -2,8 +2,8 @@
 session_start();
 error_reporting(0);
 
-if (!$_SESSION['user'] && $_SERVER['SCRIPT_NAME'] != "/site/view/startPage.php") {
-    header("Location:startPage.php");
+if (!$_SESSION['user'] && $_SERVER['SCRIPT_NAME'] != "/site/view/index.php") {
+    header("Location:index.php");
 }
 
 ?>
@@ -47,7 +47,7 @@ if (!$_SESSION['user'] && $_SERVER['SCRIPT_NAME'] != "/site/view/startPage.php")
             <ul class = "nav navbar-nav navbar-right">
 
                 <?php if ($_SESSION['userInfo'] == "Доктор") { ?>
-                    <li><a href = "viewPacientData.php">Начало</a></li>
+                    <li><a href = "appointments.php">Начало</a></li>
                     <?php
                 } else {
                     ?>
@@ -55,13 +55,14 @@ if (!$_SESSION['user'] && $_SERVER['SCRIPT_NAME'] != "/site/view/startPage.php")
                 <?php } ?>
                 <li><a href = "appointments.php"><span class="glyphicon glyphicon-time"></span>Вашите часове</a></li>
                 <?php if (isset($_SESSION['user'])) { ?>
-
+                <?php
+                     if($_SESSION['userInfo'] != '2'){ ?>
                     <li>
                         <a href="profile.php?user=<?=$_SESSION['user']?>&type=<?=$_SESSION['userInfo']?>"><span class="glyphicon glyphicon-heart"></span>
                             Показатели
                         </a>
                     </li>
-
+                     <?php } ?>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             <span class="glyphicon glyphicon-user"></span>

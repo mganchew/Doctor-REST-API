@@ -7,7 +7,7 @@
 
 function submitUserReg(values) {
 
-    var uri = "http://appointment.dev/site/view/startPage.php";
+    var uri = "http://appointment.dev/site/view/index.php";
     //console.log(values);
 
     $.ajax({

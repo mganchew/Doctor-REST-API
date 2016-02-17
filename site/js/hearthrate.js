@@ -26,6 +26,7 @@
 //
 
 function deviceDataCall(){
+     var uri = "http://appointment.dev/site/view/selectDate.php?msg=UspeshnoZapazeniCasove";
     userId = $("#userId").val();
     console.log(userId);
     $.ajax({
@@ -35,9 +36,11 @@ function deviceDataCall(){
         dataType: 'json',
         success: function (data) {
             console.log(data);
+            alert("Data inserted correctly");
             //console.log(data.point[0].value[0].intVal);
         },
         error: function () {
+            alert('Vruzkata s ustroistvoto e neuspeshna molq opitaite pak');
             console.log('error');
         }
     });
