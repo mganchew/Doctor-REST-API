@@ -6,7 +6,7 @@ $scriptNameParts = explode('/', $_SERVER['REQUEST_URI']);
 
 $data = $_POST;
 $obj = new RestModel($data);
-
+//return json_encode($data);
 switch ($scriptNameParts[2]) {
 
     case "appointment":
@@ -93,7 +93,7 @@ switch ($scriptNameParts[2]) {
         break;
     
     case "getAllDataSetsForUserFromDB":
-        $obj->prepareDataForMeasurements;
+        $obj->prepareDataForMeasurements($data);
         $response = $obj->getAllDataSetsForUserFromDB();
         break;
 

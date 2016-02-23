@@ -230,7 +230,7 @@ function getGoogleFitData() {
     }
 
     $userEmail = $.urlParam('user');
-
+    console.log($userEmail);
     $.ajax({
         type: 'POST',
         url: url,
@@ -238,7 +238,7 @@ function getGoogleFitData() {
         dataType: 'json',
         success: function (data) {
             console.log('every 5 seconds');
-            //console.log(data);
+            console.log(data);
             $.each(data.point, function (key, value) {
 
                 formatedDate = getFormatedDate(value.endTimeNanos, months);
@@ -256,7 +256,7 @@ function getGoogleFitData() {
 
         },
         error: function (data) {
-            console.log(data);
+            //console.log(data);
         }
     });
 

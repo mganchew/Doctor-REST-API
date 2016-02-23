@@ -685,7 +685,7 @@ class RestModel
     public function prepareDataForMeasurements($data)
     {
         $email = $data['email'];
-        $statement = 'SELECT id FROM users WHERE email =' . $email;
+        $statement = "SELECT id FROM users WHERE email = '" . $email . "'";
         $stmt = $this->link->query($statement);
 
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -696,8 +696,9 @@ class RestModel
     public function getAllDataSetsForUserFromDB()
     {
 
-        //$statement = 'SELECT * FROM measurements WHERE userId = ' . $this->userId;
-        $statement = 'SELECT * FROM measurements WHERE userId = 1';
+//        return json_encode(['msg'=>$this->userId]);
+        $statement = 'SELECT * FROM measurements WHERE userId = ' . $this->userId;
+        //$statement = 'SELECT * FROM measurements WHERE userId = 1';
         $stmt = $this->link->query($statement);
 
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
